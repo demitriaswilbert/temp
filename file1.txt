@@ -559,11 +559,11 @@ platform = teensy
 board = teensy41
 framework = arduino
 build_flags = 
-    -O2 
+    -O3
     -D USB_SERIAL_HID
 
 [@file: .pio/build/project.checksum]
-0f4bec00634ebba2dd622fba3be8304659379991
+34aaed02b7ff65f82f77d8c9ab6ae64036b423c6
 [@file: .vscode/c_cpp_properties.json]
 //
 // !!! WARNING !!! AUTO-GENERATED FILE!
@@ -3434,6 +3434,20 @@ uint32_t kb_delay = 0;
 uint32_t type_pos = 0;
 static bool continuous = false;
 uint32_t diskSize;
+uint32_t ms_table[20] = {0, 100, 200, 500};
+
+uint8_t getNum() { 
+    const uint32_t reg = GPIO6_PSR;
+    uint8_t val = (reg & CORE_PIN16_BITMASK) > 0;
+    val = (val << 1U) | ((reg & CORE_PIN17_BITMASK) > 0);
+    val = (val << 1U) | ((reg & CORE_PIN18_BITMASK) > 0);
+    val = (val << 1U) | ((reg & CORE_PIN19_BITMASK) > 0);
+    val = (val << 1U) | ((reg & CORE_PIN20_BITMASK) > 0);
+    val = (val << 1U) | ((reg & CORE_PIN21_BITMASK) > 0);
+    val = (val << 1U) | ((reg & CORE_PIN22_BITMASK) > 0);
+    val = (val << 1U) | ((reg & CORE_PIN23_BITMASK) > 0);
+    return val;
+}
 
 void setup() {
     // put your setup code here, to run once:
@@ -3442,6 +3456,8 @@ void setup() {
     Serial.begin(0);
     pinMode(5, INPUT_PULLUP);
     pinMode(4, INPUT_PULLUP);
+    for (int i = 16; i < 24; i++)
+        pinMode(i, INPUT_PULLDOWN);
     pinMode(LED_BUILTIN, OUTPUT);
     tx_str = (char*)txt;
     Serial.println("Initializing LittleFS ...");
@@ -3467,6 +3483,9 @@ void setup() {
         Serial.printf("File Not Found\n");
         file = myfs.open("/file", FILE_WRITE_BEGIN);
         file.close();
+    }
+    for (int i = 4; i < 20; i++) {
+        ms_table[i] = ms_table[i-3] * 10;
     }
 }
 
@@ -3640,6 +3659,8 @@ void process_char(char c) {
 
 void loop() {
     static uint32_t ms = 0;
+    static uint16_t last = 0x100U;
+    
     static bool pressed = false;
     bool pin_now = (CORE_PIN5_PINREG & CORE_PIN5_BITMASK) > 0;
     if (!(CORE_PIN4_PINREG & CORE_PIN4_BITMASK)) type_pos = 0;
@@ -3648,37 +3669,51 @@ void loop() {
     }
     digitalWriteFast(LED_BUILTIN, keyboard_leds & 0x02U);
     if (!pin_now && !pressed) {
-        // char tmpp[] =
-        // "1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./\b\n\t"; min time
-        // before press
         if (millis() - ms > 10) {
-            // report.pressMulti((uint8_t*)"abcdefghijklmnopqrstuvwxyz1234567890-=[]\\;'\n,./`\b\t
-            // " STR_CAPS_LOCK STR_DELETE STR_PAGE_UP STR_PAGE_DOWN
-            // STR_NUM_LOCK);
-            if (type_pos < tx_str.length()) {
-                report.press(tx_str[type_pos++]);
-                report.sendKeyReport();
-            }
             pressed = true;
             ms = millis();
+            if (type_pos < tx_str.length()) {
+                DELAY_WRAP(
+                    report.press(tx_str[type_pos++]);
+                    report.sendKeyReport();
+                , kb_delay);
+            }
         }
     } else if (pin_now && pressed) {
-        // release min time
         if (millis() - ms > 10) {
-            DELAY_WRAP(report.releaseAll(); report.sendKeyReport();, kb_delay);
-            if (type_pos == tx_str.length()) type_pos = 0;
             pressed = false;
             ms = millis();
+            DELAY_WRAP(
+                report.releaseAll(); 
+                report.sendKeyReport();
+            , kb_delay);
+            if (type_pos == tx_str.length()) type_pos = 0;
         }
     } else if (!pin_now && pressed && (millis() - ms >= 500)) {
-        DELAY_WRAP(report.releaseAll(); report.sendKeyReport();, kb_delay);
+        
+        DELAY_WRAP(
+            report.releaseAll(); 
+            report.sendKeyReport();
+        , kb_delay);
         if (type_pos < tx_str.length()) {
-            DELAY_WRAP(report.press(tx_str[type_pos++]); report.sendKeyReport();
-                       , kb_delay);
-            if (continuous && type_pos == tx_str.length()) type_pos = 0;
+            DELAY_WRAP(
+                report.press(tx_str[type_pos++]); 
+                report.sendKeyReport();
+            , kb_delay);
         }
+        if (continuous && type_pos == tx_str.length()) 
+            type_pos = 0;
     }
     ms = millis() - ms > 1000 ? millis() - 1000 : ms;
+    uint16_t tmp = getNum();
+    if (tmp != last) {
+        kb_delay = ms_table[(tmp & 0x0f) > 12 ? 12 : (tmp & 0x0f)];
+        continuous = (tmp & 0x80U) > 0;
+        Serial.printf("Continuous: %s\n", continuous? "true" : "false");
+        Serial.printf("Delay: %lu, Report Rate: %lu Hz\n", kb_delay,
+                        (1000000UL / (kb_delay > 125U ? kb_delay : 125U)));
+        last = tmp;
+    }
 }
 [@file: src/text.c]
 unsigned char txt[] = "#include <Arduino.h>\r\n#include \"text.h\"\r\n#include \"HIDKeyboard.h\"\r\n#include <usb_keyboard.h>\r\n\r\n#define USB_LED_NUM_LOCK 0\r\n#define USB_LED_CAPS_LOCK 1\r\n#define USB_LED_SCROLL_LOCK 2\r\n#define USB_LED_COMPOSE 3\r\n#define USB_LED_KANA 4\r\n\r\nextern int usb_keyboard_transmit(int endpoint, const uint8_t *data, uint32_t len);\r\nstatic Reports report;\r\n\r\nvoid setup() {\r\n    // put your setup code here, to run once:\r\n    Keyboard.begin();\r\n    pinMode(5, INPUT_PULLUP);\r\n    pinMode(LED_BUILTIN, OUTPUT);\r\n}\r\n\r\nvoid loop() {\r\n    static uint32_t ms = 0;\r\n    static uint32_t i = 0;\r\n    static bool pressed = false;\r\n    bool pin_now = (CORE_PIN5_PINREG & CORE_PIN5_BITMASK) > 0;\r\n    digitalWriteFast(LED_BUILTIN, keyboard_leds & 0x02U);\r\n    if (!pin_now && !pressed) {\r\n        // char tmpp[] = \"1234567890-=qwertyuiop[]\\\\asdfghjkl;\'zxcvbnm,./\\b\\n\\t\";\r\n        // min time before press\r\n        if (millis() - ms > 10) {\r\n            // report.pressMulti((uint8_t*)\"abcdefghijklmnopqrstuvwxyz1234567890-=[]\\\\;\'\\n,./`\\b\\t \" STR_CAPS_LOCK STR_DELETE STR_PAGE_UP STR_PAGE_DOWN STR_NUM_LOCK);\r\n            if (i < size_txt) {\r\n                report.press(txt[i++]);\r\n                report.sendKeyReport();\r\n            }\r\n            pressed = true;\r\n            ms = millis();\r\n        }\r\n    } else if (pin_now && pressed) {\r\n        // release min time\r\n        if (millis() - ms > 10) {\r\n            report.releaseAll();\r\n            report.sendKeyReport();\r\n            if (i == size_txt) i = 0;\r\n            pressed = false;\r\n            ms = millis();\r\n        }\r\n    } else if (!pin_now && pressed && (millis() - ms >= 500)) {\r\n        static bool clear = false;\r\n        if (i < size_txt) {\r\n            report.releaseAll();\r\n            report.sendKeyReport();\r\n            report.press(txt[i++]);\r\n            report.sendKeyReport();\r\n            clear = true;\r\n        } else if (clear) {\r\n            report.releaseAll();\r\n            report.sendKeyReport();\r\n            clear = false;\r\n        }\r\n    }\r\n    ms = millis() - ms > 1000? millis() - 1000: ms;\r\n}"; unsigned long long size_txt = sizeof(txt) - 1;
