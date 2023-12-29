@@ -538,6 +538,51 @@ const uint32_t _asciimap[] =
 
 int main() {
     char ch[] = STR_F5 STR_F6 STR_F7 STR_F10 STR_F11 STR_F12 "aezakmi" "hesoyam" "cvwkxam" "uzumymw" "vkypqcf" "worshipme" "helloladies" "toodamnhot" "fullclip" STR_ESC;
+    // char ch[] = \
+    // "KB ram 0" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 1" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 2" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 3" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 4" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 5" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 6" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 7" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 8" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 9" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 10" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 11" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 12" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 13" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 14" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 15" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 16" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 17" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 18" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 19" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 20" STR_ESC\
+    // "KB ram test" STR_ESC\
+    // "KB ram 21" STR_ESC\
+    // "KB ram test" STR_ESC;
     FILE* fp = fopen("new.txt", "wb");
     fwrite(ch, sizeof(ch), 1, fp);
 }
@@ -629,179 +674,28 @@ for i in range(len(sd)):
 (0UL << 29UL) | (2UL << 8UL) // 30. 664.619995 MHz
 (0UL << 29UL) | (1UL << 8UL) // 31. 720.0 MHz
 
-[@file: new.txt]
-#include <Arduino.h>
-uint32_t rTime;
-uint32_t rTCnt = 0;
-extern "C" uint8_t external_psram_size;
-
-bool memory_ok = false;
-uint32_t *memory_begin, *memory_end;
-
-bool check_fixed_pattern(uint32_t pattern);
-bool check_lfsr_pattern(uint32_t seed);
-
-void setup()
-{
-  while (!Serial) ; // wait
-  pinMode(13, OUTPUT);
-  uint8_t size = external_psram_size;
-  Serial.printf("EXTMEM Memory Test, %d Mbyte\n", size);
-  if (size == 0) return;
-  const float clocks[4] = {396.0f, 720.0f, 664.62f, 528.0f};
-  CCM_CBCMR = (CCM_CBCMR & ~(7UL << 29UL) & ~(3UL << 8UL)) | (3UL << 29UL) | (1UL << 8UL);
-  float frequency = clocks[(CCM_CBCMR >> 8) & 3] / (float)(((CCM_CBCMR >> 29) & 7) + 1);
-  Serial.printf(" CCM_CBCMR=%08X (%.1f MHz)\n", CCM_CBCMR, frequency);
-  memory_begin = (uint32_t *)(0x70000000);
-  memory_end = (uint32_t *)(0x70000000 + size * 1048576);
-  elapsedMillis msec = 0;
-  if (!check_fixed_pattern(0x5A698421)) return;
-  if (!check_lfsr_pattern(2976674124ul)) return;
-  if (!check_lfsr_pattern(1438200953ul)) return;
-  if (!check_lfsr_pattern(3413783263ul)) return;
-  if (!check_lfsr_pattern(1900517911ul)) return;
-  if (!check_lfsr_pattern(1227909400ul)) return;
-  if (!check_lfsr_pattern(276562754ul)) return;
-  if (!check_lfsr_pattern(146878114ul)) return;
-  if (!check_lfsr_pattern(615545407ul)) return;
-  if (!check_lfsr_pattern(110497896ul)) return;
-  if (!check_lfsr_pattern(74539250ul)) return;
-  if (!check_lfsr_pattern(4197336575ul)) return;
-  if (!check_lfsr_pattern(2280382233ul)) return;
-  if (!check_lfsr_pattern(542894183ul)) return;
-  if (!check_lfsr_pattern(3978544245ul)) return;
-  if (!check_lfsr_pattern(2315909796ul)) return;
-  if (!check_lfsr_pattern(3736286001ul)) return;
-  if (!check_lfsr_pattern(2876690683ul)) return;
-  if (!check_lfsr_pattern(215559886ul)) return;
-  if (!check_lfsr_pattern(539179291ul)) return;
-  if (!check_lfsr_pattern(537678650ul)) return;
-  if (!check_lfsr_pattern(4001405270ul)) return;
-  if (!check_lfsr_pattern(2169216599ul)) return;
-  if (!check_lfsr_pattern(4036891097ul)) return;
-  if (!check_lfsr_pattern(1535452389ul)) return;
-  if (!check_lfsr_pattern(2959727213ul)) return;
-  if (!check_lfsr_pattern(4219363395ul)) return;
-  if (!check_lfsr_pattern(1036929753ul)) return;
-  if (!check_lfsr_pattern(2125248865ul)) return;
-  if (!check_lfsr_pattern(3177905864ul)) return;
-  if (!check_lfsr_pattern(2399307098ul)) return;
-  if (!check_lfsr_pattern(3847634607ul)) return;
-  if (!check_lfsr_pattern(27467969ul)) return;
-  if (!check_lfsr_pattern(520563506ul)) return;
-  if (!check_lfsr_pattern(381313790ul)) return;
-  if (!check_lfsr_pattern(4174769276ul)) return;
-  if (!check_lfsr_pattern(3932189449ul)) return;
-  if (!check_lfsr_pattern(4079717394ul)) return;
-  if (!check_lfsr_pattern(868357076ul)) return;
-  if (!check_lfsr_pattern(2474062993ul)) return;
-  if (!check_lfsr_pattern(1502682190ul)) return;
-  if (!check_lfsr_pattern(2471230478ul)) return;
-  if (!check_lfsr_pattern(85016565ul)) return;
-  if (!check_lfsr_pattern(1427530695ul)) return;
-  if (!check_lfsr_pattern(1100533073ul)) return;
-  if (!check_fixed_pattern(0x55555555)) return;
-  if (!check_fixed_pattern(0x33333333)) return;
-  if (!check_fixed_pattern(0x0F0F0F0F)) return;
-  if (!check_fixed_pattern(0x00FF00FF)) return;
-  if (!check_fixed_pattern(0x0000FFFF)) return;
-  if (!check_fixed_pattern(0xAAAAAAAA)) return;
-  if (!check_fixed_pattern(0xCCCCCCCC)) return;
-  if (!check_fixed_pattern(0xF0F0F0F0)) return;
-  if (!check_fixed_pattern(0xFF00FF00)) return;
-  if (!check_fixed_pattern(0xFFFF0000)) return;
-  if (!check_fixed_pattern(0xFFFFFFFF)) return;
-  if (!check_fixed_pattern(0x00000000)) return;
-  Serial.printf(" test ran for %.2f seconds\n", (float)msec / 1000.0f);
-  Serial.printf(" %d MB's test ran at %.2f MB/sec overall\n", 2 * rTCnt * external_psram_size, 2 * rTCnt * external_psram_size * 1024.0 / (float)msec);
-  Serial.println("All memory tests passed :-)");
-  memory_ok = true;
-}
-
-bool fail_message(volatile uint32_t *location, uint32_t actual, uint32_t expected)
-{
-  Serial.printf(" Error at %08X, read %08X but expected %08X\n",
-                (uint32_t)location, actual, expected);
-  return false;
-}
-
-// fill the entire RAM with a fixed pattern, then check it
-bool check_fixed_pattern(uint32_t pattern)
-{
-  volatile uint32_t *p;
-  Serial.printf("testing with fixed pattern %08X\t", pattern);
-  rTime = micros();
-  for (p = memory_begin; p < memory_end; p++) {
-    *p = pattern;
-  }
-  rTime = micros() - rTime;
-  Serial.printf( "\tfill us:%d MB/s:%.2f\t", rTime, external_psram_size * 1024 * 1024.0 / rTime );
-  arm_dcache_flush_delete((void *)memory_begin,
-                          (uint32_t)memory_end - (uint32_t)memory_begin);
-  rTime = micros();
-  for (p = memory_begin; p < memory_end; p++) {
-    uint32_t actual = *p;
-    if (actual != pattern) return fail_message(p, actual, pattern);
-  }
-  rTime = micros() - rTime;
-  Serial.printf( "\ttest us:%d MB/s:%.2f\n", rTime, external_psram_size * 1024 * 1024.0 / rTime );
-  rTCnt++;
-  return true;
-}
-
-// fill the entire RAM with a pseudo-random sequence, then check it
-bool check_lfsr_pattern(uint32_t seed)
-{
-  volatile uint32_t *p;
-  uint32_t reg;
-
-  Serial.printf("testing with pseudo-random sequence, seed=%u\t", seed);
-  reg = seed;
-  uint32_t rTime;
-  rTime = micros();
-  for (p = memory_begin; p < memory_end; p++) {
-    *p = reg;
-    for (int i = 0; i < 3; i++) {
-      if (reg & 1) {
-        reg >>= 1;
-        reg ^= 0x7A5BC2E3;
-      } else {
-        reg >>= 1;
-      }
-    }
-  }
-  rTime = micros() - rTime;
-  Serial.printf( "\tfill us:%d MB/s:%.2f\t", rTime, external_psram_size * 1024 * 1024.0 / rTime );
-  arm_dcache_flush_delete((void *)memory_begin,
-                          (uint32_t)memory_end - (uint32_t)memory_begin);
-  reg = seed;
-  rTime = micros();
-  for (p = memory_begin; p < memory_end; p++) {
-    uint32_t actual = *p;
-    if (actual != reg) return fail_message(p, actual, reg);
-    //Serial.printf(" reg=%08X\n", reg);
-    for (int i = 0; i < 3; i++) {
-      if (reg & 1) {
-        reg >>= 1;
-        reg ^= 0x7A5BC2E3;
-      } else {
-        reg >>= 1;
-      }
-    }
-  }
-  rTime = micros() - rTime;
-  Serial.printf( "\ttest us:%d MB/s:%.2f\n", rTime, external_psram_size * 1024 * 1024.0 / rTime );
-  rTCnt++;
-  return true;
-}
-
-void loop()
-{
-  digitalWrite(13, HIGH);
-  delay(100);
-  if (!memory_ok) digitalWrite(13, LOW); // rapid blink if any test fails
-  delay(100);
-}
+KB ram 0:	(49.5 MHz),	    per_bytes: 39.623991, MB/s: 15.142341
+KB ram 1:	(56.6 MHz),	    per_bytes: 34.643385, MB/s: 17.319324
+KB ram 2:	(66.0 MHz),	    per_bytes: 30.009388, MB/s: 19.993743
+KB ram 3:	(66.0 MHz),	    per_bytes: 29.973628, MB/s: 20.017597
+KB ram 4:	(75.4 MHz),	    per_bytes: 26.348697, MB/s: 22.771524
+KB ram 5:	(79.2 MHz),	    per_bytes: 25.339239, MB/s: 23.678690
+KB ram 6:	(83.1 MHz),	    per_bytes: 24.286850, MB/s: 24.704727
+KB ram 7:	(88.0 MHz),	    per_bytes: 22.944839, MB/s: 26.149671
+KB ram 8:	(90.0 MHz),	    per_bytes: 22.438235, MB/s: 26.740071
+KB ram 9:	(94.9 MHz),	    per_bytes: 21.422368, MB/s: 28.008109
+KB ram 10:	(99.0 MHz),	    per_bytes: 20.747738, MB/s: 28.918815
+KB ram 11:	(102.9 MHz),	per_bytes: 19.989192, MB/s: 30.016221
+KB ram 12:	(105.6 MHz),	per_bytes: 19.605323, MB/s: 30.603934
+KB ram 13:	(110.8 MHz),	per_bytes: 18.717328, MB/s: 32.055858
+KB ram 14:	(120.0 MHz),	per_bytes: 17.439951, MB/s: 34.403766
+KB ram 15:	(132.0 MHz),	per_bytes: 15.980623, MB/s: 37.545470
+KB ram 16:	(132.0 MHz),	per_bytes: 15.991285, MB/s: 37.520437
+KB ram 17:	(132.9 MHz),	per_bytes: 15.818480, MB/s: 37.930321
+KB ram 18:	(144.0 MHz),	per_bytes: 14.504858, MB/s: 41.365451
+KB ram 19:	(166.2 MHz),	per_bytes: 12.592710, MB/s: 47.646616
+KB ram 20:	(176.0 MHz),	per_bytes: 11.848444, MB/s: 50.639563
+KB ram 21:	(180.0 MHz),	per_bytes: 11.531907, MB/s: 52.029558
 [@file: platformio.ini]
 ; PlatformIO Project Configuration File
 ;
@@ -822,7 +716,7 @@ build_flags =
     -D USB_SERIAL_HID
 
 [@file: .pio/build/project.checksum]
-34aaed02b7ff65f82f77d8c9ab6ae64036b423c6
+f6ae28ca02834611307e7df3eb32df9c47e1ff41
 [@file: .vscode/c_cpp_properties.json]
 //
 // !!! WARNING !!! AUTO-GENERATED FILE!
@@ -1370,6 +1264,28 @@ public:
 #endif  // __cplusplus
 #endif  // EXTString_class_h
 
+[@file: include/filesystem.h]
+#ifndef FILESYSTEM_H
+#define FILESYSTEM_H
+
+#include <Arduino.h>
+
+#include <LittleFS.h>
+#include "EXTString.h"
+
+extern LittleFS_Program myfs;
+extern uint32_t diskSize;
+
+#define PROG_FLASH_SIZE                                                        \
+    1024 * 1024 * 4 // Specify size to use of onboard Teensy Program Flash chip
+                    // This creates a LittleFS drive in Teensy PCB FLash.
+
+int loadFileToStr(const char* filePath, EXTString& str, LittleFS_Program& fs = myfs);
+int saveStrToFile(const char* filePath, EXTString& str, LittleFS_Program& fs = myfs);
+int disk_init(uint32_t size = PROG_FLASH_SIZE, LittleFS_Program& fs = myfs);
+
+
+#endif // FILESYSTEM_H
 [@file: include/HIDKeyboard.h]
 /*
   Keyboard.h
@@ -1697,6 +1613,53 @@ public:
 
 
 
+[@file: include/kbcontrol.h]
+#ifndef KBCONTROL_H
+#define KBCONTROL_H
+
+#include <Arduino.h>
+#include "EXTString.h"
+#include "filesystem.h"
+#include "psramctrl.h"
+
+extern EXTString rx_str;
+extern EXTString tx_str;
+extern bool tx_lock;
+extern uint32_t kb_delay;
+extern uint32_t type_pos;
+
+void process_char(Stream& st, char c);
+void process_char_loop(Stream& st);
+
+#endif
+[@file: include/psramctrl.h]
+#ifndef PSRAMCTRL_H
+#define PSRAMCTRL_H
+
+#include <Arduino.h>
+#include "static_malloc.h"
+
+// EXTMEM POOL
+#define EXTMEM_SIZE 0x700000UL
+extern const float clock_source[];
+extern const uint32_t ram_clock_sel_psc[];
+extern const uint32_t ram_clock_sel_psc_size;
+
+static inline void psram_clock_speed_set(uint16_t index) {
+    index = (index < ram_clock_sel_psc_size)?
+            index : ram_clock_sel_psc_size - 1;
+    CCM_CBCMR = (CCM_CBCMR & ~(7UL << 29UL) & ~(3UL << 8UL)) |
+                        ram_clock_sel_psc[index];
+}
+
+static inline float psram_clock_speed_get() {
+    return (clock_source[(CCM_CBCMR >> 8) & 3] /
+            (float)(((CCM_CBCMR >> 29) & 7) + 1));
+}
+
+int psram_init();
+
+#endif // PSRAMCTRL_H
 [@file: include/README]
 
 This directory is intended for project header files.
@@ -3294,6 +3257,86 @@ float EXTString::toFloat(void) const
 
 
 
+[@file: src/filesystem.cpp]
+#include "filesystem.h"
+
+LittleFS_Program myfs;
+uint32_t diskSize;
+
+/**
+ * @brief Load from file to string
+ * 
+ * @param fs file system
+ * @param filePath path to file
+ * @param str string to load file to
+ * @return int 
+ */
+int loadFileToStr(const char* filePath, EXTString& str, LittleFS_Program& fs) {
+    // open file
+    File file = fs.open(filePath, FILE_READ);
+
+    if (file) { // if file exists
+        str = "";
+        for (int c = file.read(); c >= 0; c = file.read()) 
+            str += (char)c;
+        file.close();
+        return str.length();
+
+    } else { // if file doesn't exist
+        // create new file
+        file = fs.open(filePath, FILE_WRITE_BEGIN);
+        if (!file) return -2;
+
+        file.close();
+        return -1;
+    }
+}
+
+/**
+ * @brief save from string to file
+ * 
+ * @param fs file system 
+ * @param filePath path to file
+ * @param str string to save
+ * @return int 
+ */
+int saveStrToFile(const char* filePath, EXTString& str, LittleFS_Program& fs) {
+    
+    // delete previous file
+    fs.remove("/file");
+
+    // open new file
+    File file = fs.open("/file", FILE_WRITE_BEGIN);
+
+    // write to file
+    if (file) {
+        file.write((const uint8_t*)str.c_str(), str.length());
+        file.flush();
+        int position = file.position();
+        file.close();
+        return position;
+    } 
+    
+    // file error
+    return -1;
+}
+
+/**
+ * @brief Initialize FS
+ * 
+ * @param size size of FS in flash, default = PROG_FLASH_SIZE
+ * @return int (0: fail, >0: success)
+ */
+int disk_init(uint32_t size, LittleFS_Program& fs) {
+    diskSize = size;
+    int cnt = 5;
+    for (; cnt > 0; cnt--) {
+        if (fs.begin(diskSize)) 
+            return cnt;
+        delay(100);
+    }
+    return 0;
+}
 [@file: src/HIDKeyboard.cpp]
 /*
   Keyboard.cpp
@@ -3649,31 +3692,338 @@ void Reports::releaseAll(void)
 void Reports::sendKeyReport() {
     usb_keyboard_transmit(KEYBOARD_ENDPOINT, (uint8_t*)&_keyReport, KEYBOARD_SIZE);
 }
+[@file: src/kbcontrol.cpp]
+#include "kbcontrol.h"
+
+// keyboard params
+EXTString rx_str = "";
+EXTString tx_str = "";
+bool tx_lock = false;
+uint32_t kb_delay = 0;
+uint32_t type_pos = 0;
+
+/**
+ * @brief Process received character from serial
+ *
+ * @param c
+ */
+void process_char(Stream& st, char c) {
+
+    /** @brief Clear received string */
+    static bool enable_backspace_clear = true;
+    if (c == '\b' && enable_backspace_clear) {
+        rx_str = "";
+        st.println("cleared");
+        return;
+    }
+
+    /**
+     * @brief received Escape char (\033)
+     *
+     * start processing received string
+     * when received Escape char
+     *
+     */
+    if (c == '\033') {
+        st.println();
+
+        /**
+         * @brief Toggle backspace clear
+         *
+         * Toggles whether backspace char clears
+         * rx_str or be treated as a normal character
+         *
+         */
+        if (strncmp(rx_str.c_str(), "KB bkspc", 8) == 0 &&
+            rx_str.length() == 8) {
+            rx_str = "";
+            enable_backspace_clear = !enable_backspace_clear;
+            st.println((enable_backspace_clear) ? "Backspace clears RX buffer"
+                                                : "Backspace is normal key");
+            return;
+        }
+
+        /**
+         * @brief set keyboard report delay
+         * MAX allowed: 1000000us (1 second)
+         */
+        if (strncmp(rx_str.c_str(), "KB delay ", 9) == 0 &&
+            rx_str.length() > 9 && rx_str.length() < 19) {
+
+            EXTString kb_delay_str(rx_str.substring(9).c_str());
+            kb_delay_str.trim();
+
+            kb_delay = kb_delay_str.toInt();
+            kb_delay = (kb_delay > 1000000) ? 1000000 : kb_delay;
+
+            rx_str = "";
+            st.printf("Key Delay: %lu ms\n", kb_delay);
+            st.printf("Report Rate: %lu Hz\n",
+                      (1000000UL / (kb_delay > 125U ? kb_delay : 125U)));
+            return;
+        }
+
+        /**
+         * @brief retrieves keyboard report delay
+         */
+        if (strncmp(rx_str.c_str(), "KB delay", 8) == 0 &&
+            rx_str.length() == 8) {
+
+            rx_str = "";
+            st.printf("Key Delay: %lu ms\n", kb_delay);
+            st.printf("Report Rate: %lu Hz\n",
+                      (1000000UL / (kb_delay > 125U ? kb_delay : 125U)));
+            return;
+        }
+
+        /**
+         * @brief set keyboard autotype position
+         */
+        if (strncmp(rx_str.c_str(), "KB pos ", 7) == 0 && rx_str.length() > 7 &&
+            rx_str.length() < 17) {
+
+            EXTString kb_pos_str(rx_str.substring(7).c_str());
+            kb_pos_str.trim();
+
+            type_pos = kb_pos_str.toInt();
+            type_pos = (type_pos >= tx_str.length()) ? (tx_str.length() - 1)
+                                                     : type_pos;
+
+            rx_str = "";
+            st.printf("Key Pos: %lu\n", type_pos);
+            return;
+        }
+
+        /**
+         * @brief get keyboard autotype position
+         */
+        if (strncmp(rx_str.c_str(), "KB pos", 6) == 0 && rx_str.length() == 6) {
+
+            rx_str = "";
+            st.printf("Key Pos: %lu\n", type_pos);
+            return;
+        }
+
+        /**
+         * @brief get keyboard autotype text length
+         *
+         */
+        if (strncmp(rx_str.c_str(), "KB len", 6) == 0 && rx_str.length() == 6) {
+
+            rx_str = "";
+            st.printf("Length: %lu\n", tx_str.length());
+            return;
+        }
+
+        /**
+         * @brief mouse position
+         *
+         */
+        static int mouse_x = 0;
+        static int mouse_y = 0;
+
+        /**
+         * @brief set mouse x position
+         *
+         */
+        if (strncmp(rx_str.c_str(), "KB mouse x ", 11) == 0 &&
+            rx_str.length() > 11 && rx_str.length() < 18) {
+
+            EXTString kb_pos_str(rx_str.substring(11).c_str());
+            kb_pos_str.trim();
+            mouse_x = kb_pos_str.toInt();
+            rx_str = "";
+            usb_mouse_position(mouse_x, mouse_y);
+            st.printf("Pos: %lu, %lu\n", mouse_x, mouse_y);
+            return;
+        }
+
+        /**
+         * @brief set mouse y position
+         *
+         */
+        if (strncmp(rx_str.c_str(), "KB mouse y ", 11) == 0 &&
+            rx_str.length() > 11 && rx_str.length() < 18) {
+
+            EXTString kb_pos_str(rx_str.substring(11).c_str());
+            kb_pos_str.trim();
+            mouse_y = kb_pos_str.toInt();
+            rx_str = "";
+            usb_mouse_position(mouse_x, mouse_y);
+            st.printf("Pos: %lu, %lu\n", mouse_x, mouse_y);
+            return;
+        }
+
+        /**
+         * @brief Load data from file to tx_str
+         *
+         */
+        if (strncmp(rx_str.c_str(), "KB load", 7) == 0 &&
+            rx_str.length() == 7) {
+
+            rx_str = "";
+            st.println("loading");
+
+            int loaded = loadFileToStr("/file", tx_str);
+
+            if (loaded >= 0)
+                st.printf("Loaded %lu bytes\n", loaded);
+            else
+                st.printf("Error Code: %d", loaded);
+
+            return;
+        }
+
+        /**
+         * @brief save data from tx_str to file
+         *
+         */
+        if (strncmp(rx_str.c_str(), "KB save", 7) == 0 &&
+            rx_str.length() == 7) {
+
+            st.println("saving");
+            rx_str = "";
+
+            int saved = saveStrToFile("/file", tx_str);
+
+            if (saved >= 0)
+                st.printf("Saved %d bytes\n", saved);
+            else
+                st.printf("Error Code: %d", saved);
+
+            return;
+        }
+
+        /**
+         * @brief Test PSRAM Speed
+         *
+         */
+        if (strncmp(rx_str.c_str(), "KB ram test", 11) == 0 &&
+            rx_str.length() == 11) {
+
+            rx_str = "";
+
+            // calculate clock frq
+            float frequency = psram_clock_speed_get();
+
+            st.printf("CCM_CBCMR = %08lX (%.1f MHz)\n", CCM_CBCMR, frequency);
+
+            // allocate memory
+            uint32_t str_size = 0x200000UL;
+            char* str = (char*)sm_malloc(str_size);
+
+            // test memset speed
+            uint32_t arm_cyccnt_write = ARM_DWT_CYCCNT;
+            memset(str, 'U', str_size);
+            arm_cyccnt_write = ARM_DWT_CYCCNT - arm_cyccnt_write;
+
+            // check integrity
+            bool mem_ok = true;
+            for (char* i = str; i < str + str_size && *i == 'U'; i++) {
+                if (*i != 'U') {
+                    mem_ok = false;
+                    break;
+                }
+            }
+
+            // log
+            if (mem_ok) {
+                st.printf(
+                    "write count: %lu, ms: %lf, per_bytes: %lf, MB/s: %lf\n",
+                    str_size, (double)arm_cyccnt_write / F_CPU_ACTUAL,
+                    (double)arm_cyccnt_write / str_size,
+                    (double)((uint64_t)F_CPU_ACTUAL * str_size) /
+                        arm_cyccnt_write / 1000000.0);
+            } else {
+                st.printf("Memory Error\n");
+            }
+
+            // free allocated memory
+            sm_free(str);
+
+            return;
+        }
+
+        // set EXT RAM speed
+        if (strncmp(rx_str.c_str(), "KB ram ", 7) == 0 && rx_str.length() > 7 &&
+            rx_str.length() < 10) {
+
+            EXTString kb_pos_str(rx_str.substring(7).c_str());
+            kb_pos_str.trim();
+            rx_str = "";
+
+            // get clock speed index
+            uint32_t index = kb_pos_str.toInt();
+
+            // set clock speed
+            psram_clock_speed_set(index);
+
+            // calculate clock frq
+            float frequency = psram_clock_speed_get();
+
+            st.printf("CCM_CBCMR = %08lX (%.1f MHz)\n", CCM_CBCMR, frequency);
+
+            return;
+        }
+        // get EXT RAM speed
+        if (strncmp(rx_str.c_str(), "KB ram", 6) == 0 && rx_str.length() == 6) {
+
+            rx_str = "";
+
+            // calculate clock frq
+            float frequency = psram_clock_speed_get();
+
+            st.printf("CCM_CBCMR = %08lX (%.1f MHz)\n", CCM_CBCMR, frequency);
+
+            return;
+        }
+
+        // change string
+        if (!tx_lock && rx_str.length()) {
+            tx_lock = true;
+            tx_str.move(rx_str);
+            type_pos = 0UL;
+            tx_lock = false;
+            st.printf("Received %lu bytes\n", (uint32_t)tx_str.length());
+            st.printf("Address of tx_str         : 0x%08lx\n", &tx_str);
+            st.printf("Address of tx_str.c_str() : 0x%08lx\n", tx_str.c_str());
+            st.printf("Address of rx_str         : 0x%08lx\n", &rx_str);
+            st.printf("Address of rx_str.c_str() : 0x%08lx\n", rx_str.c_str());
+        }
+    } else {
+        rx_str += (char)c;
+        st.print(c);
+    }
+}
+
+/**
+ * @brief wrapper function for process_char
+ *
+ * loops process_char on Stream::available()
+ *
+ * @param st stream to process
+ */
+void process_char_loop(Stream& st) {
+    while (st.available()) {
+        process_char(st, st.read());
+    }
+}
+
 [@file: src/main.cpp]
+#include "EXTString.h"
 #include "HIDKeyboard.h"
+#include "filesystem.h"
 #include "text.h"
 #include <Arduino.h>
-#include <LittleFS.h>
-#include <usb_keyboard.h>
-#include <usb_mouse.h>
-#include "EXTString.h"
-#include "static_malloc.h"
 #include <math.h>
+#include "psramctrl.h"
+#include "kbcontrol.h"
 
-LittleFS_Program myfs;
-
-#define PROG_FLASH_SIZE                                                        \
-    1024 * 1024 * 4 // Specify size to use of onboard Teensy Program Flash chip
-                    // This creates a LittleFS drive in Teensy PCB FLash.
-
-#define EXTMEM_FLASH_SIZE 0x700000UL
-EXTMEM uint8_t extmem_pool[EXTMEM_FLASH_SIZE];
-
-#define USB_LED_NUM_LOCK 0
-#define USB_LED_CAPS_LOCK 1
-#define USB_LED_SCROLL_LOCK 2
-#define USB_LED_COMPOSE 3
-#define USB_LED_KANA 4
+#define USB_LED_NUM_LOCK    (1U << 0U)
+#define USB_LED_CAPS_LOCK   (1U << 1U)
+#define USB_LED_SCROLL_LOCK (1U << 2U)
+#define USB_LED_COMPOSE     (1U << 3U)
+#define USB_LED_KANA        (1U << 4U)
 
 #define DELAY_WRAP(STATEMENT, DELAY)                                           \
     {                                                                          \
@@ -3684,25 +4034,183 @@ EXTMEM uint8_t extmem_pool[EXTMEM_FLASH_SIZE];
             ;                                                                  \
     }
 
-extern int usb_keyboard_transmit(int endpoint, const uint8_t* data,
-                                 uint32_t len);
-static Reports report;
+static uint32_t ms_table[20] = {0, 100, 200, 500};
 
-static EXTString rx_str; 
-static EXTString tx_str;
-static bool tx_lock;
-uint32_t kb_delay = 0;
-uint32_t type_pos = 0;
-uint32_t diskSize;
-uint32_t ms_table[20] = {0, 100, 200, 500};
-#define STR_SIZE 0x80000U
+/**
+ * @brief Get the dip switch value for KB delay
+ *
+ * DIP Switch is on pins (16, 17, 18, 19, 20, 21, 22, 23)
+ *
+ * @return uint8_t
+ */
+static uint8_t dip_val_read() {
+    const uint32_t reg = GPIO6_PSR;
+    uint8_t val = (reg & CORE_PIN16_BITMASK) > 0;
+    val = (val << 1U) | ((reg & CORE_PIN17_BITMASK) > 0);
+    val = (val << 1U) | ((reg & CORE_PIN18_BITMASK) > 0);
+    val = (val << 1U) | ((reg & CORE_PIN19_BITMASK) > 0);
+    val = (val << 1U) | ((reg & CORE_PIN20_BITMASK) > 0);
+    val = (val << 1U) | ((reg & CORE_PIN21_BITMASK) > 0);
+    val = (val << 1U) | ((reg & CORE_PIN22_BITMASK) > 0);
+    val = (val << 1U) | ((reg & CORE_PIN23_BITMASK) > 0);
+    return val;
+}
 
-const float clocks[4] = {
-    (float)(24*22*18)/((CCM_ANALOG_PFD_528>>16)&0x3fU), 
-    (float)(24*20*18)/((CCM_ANALOG_PFD_480>>0)&0x3fU), 
-    (float)(24*20*18)/((CCM_ANALOG_PFD_480>>8)&0x3fU), 
-    (float)(24*22)
-};
+void setup() {
+
+    // init psram
+    psram_init();
+
+    // set screen size for mouse position functions
+    usb_mouse_screen_size(1920, 1080, false);
+
+    // initialize USB CDC
+    Serial.begin(0);
+    delay(1000);
+
+    // config type pin and reset pin
+    pinMode(5, INPUT_PULLUP);
+    pinMode(4, INPUT_PULLUP);
+
+    // config CAPS LOCK LED pin
+    pinMode(LED_BUILTIN, OUTPUT);
+
+    // config dip switch pin
+    for (int i = 16; i < 24; i++)
+        pinMode(i, INPUT_PULLDOWN);
+    
+    // init FS
+    if (!disk_init()) Serial.printf("Error initializing FS\n");
+
+    // Load saved file to tx_str
+    int loaded = loadFileToStr("/file", tx_str);
+    if (loaded >= 0) {
+        Serial.printf("Loaded %lu bytes\n", loaded);
+    } else if (loaded == -1) {
+        Serial.printf("File Does Not Exist!, Creating new file\n");
+    } else {
+        Serial.printf("File Error");
+    }
+
+    // init delay table
+    for (int i = 4; i < 20; i++) {
+        ms_table[i] = ms_table[i - 3] * 10;
+    }
+}
+
+void loop() {
+
+    // process any input from USB CDC
+    process_char_loop(Serial);
+
+    // Keyboard report struct
+    static Reports report;
+
+    // read type pin and reset pin state
+    static bool type_pin_pressed = false;
+    static uint32_t type_pin_ms = 0;
+    bool type_pin = (CORE_PIN5_PINREG & CORE_PIN5_BITMASK) > 0;
+    bool reset_pin = (CORE_PIN4_PINREG & CORE_PIN4_BITMASK) > 0;
+
+
+    // reset type pos when reset pin is pressed, but type pin isnt
+    type_pos = (!reset_pin && !type_pin_pressed) ? 0 : type_pos;
+
+    // KB output LEDs
+    digitalWriteFast(LED_BUILTIN, keyboard_leds & USB_LED_CAPS_LOCK);
+
+    // Debounce
+    if (!type_pin && !type_pin_pressed) { 
+        // if type pin is pressed
+
+        if (millis() - type_pin_ms > 10) {
+            // 10ms debounce
+
+            type_pin_pressed = true;
+            type_pin_ms = millis();
+            if (type_pos < tx_str.length()) {
+                DELAY_WRAP(
+                    report.press(tx_str[type_pos++]); 
+                    report.sendKeyReport();
+                , kb_delay);
+            }
+        }
+    } else if (type_pin && type_pin_pressed) { 
+        // if type pin is released
+
+        if (millis() - type_pin_ms > 10) {
+            // 10ms debounce
+
+            type_pin_pressed = false;
+            type_pin_ms = millis();
+
+            // release the keys
+            DELAY_WRAP(
+                report.releaseAll(); 
+                report.sendKeyReport();
+            , kb_delay);
+
+            // reset type pos if reached end of text
+            if (type_pos == tx_str.length()) type_pos = 0;
+        }
+    } else if (!type_pin && type_pin_pressed && (millis() - type_pin_ms >= 500)) { 
+        // autotype if key is pressed for longer than 500ms
+
+        // release previously pressed key
+        DELAY_WRAP(
+            report.releaseAll(); 
+            report.sendKeyReport();
+        , kb_delay);
+
+        // press key
+        if (type_pos < tx_str.length()) {
+            DELAY_WRAP(report.press(tx_str[type_pos++]); report.sendKeyReport();
+                       , kb_delay);
+        }
+
+        // continuous mode: reset type pos when autotyping has reached end of the text
+        if (!reset_pin && (type_pos == tx_str.length())) type_pos = 0;
+    }
+
+    // KB delay from DIP switch state
+    static uint32_t dip_ms = 0;
+    static uint16_t dip_last = 0x100U;
+    uint16_t dip_val = dip_val_read();
+
+    // 20ms debounce
+    if (dip_val != dip_last && (millis() - dip_ms > 20)) {
+        dip_last = dip_val;
+        dip_ms = millis();
+
+        // get delay value from delay table
+        kb_delay = ms_table[(dip_val & 0x0f) > 12 ? 12 : (dip_val & 0x0f)];
+
+        // log
+        Serial.printf("Delay: %lu, Report Rate: %lu Hz\n", kb_delay,
+                      (1000000UL / (kb_delay > 125U ? kb_delay : 125U)));
+    }
+
+    // cap all ms difference at 1000ms (prevent overflow)
+    dip_ms = millis() - dip_ms > 1000 ? 
+                millis() - 1000 : dip_ms;
+
+    type_pin_ms = millis() - type_pin_ms > 1000 ? 
+                    millis() - 1000 : type_pin_ms;
+}
+[@file: src/psramctrl.cpp]
+#include "psramctrl.h"
+
+static EXTMEM uint8_t extmem_pool[EXTMEM_SIZE];
+
+/**
+ * @brief RAM speed data
+ *
+ */
+const float clock_source[4] = {
+    (float)(24 * 22 * 18) / ((CCM_ANALOG_PFD_528 >> 16) & 0x3fU),
+    (float)(24 * 20 * 18) / ((CCM_ANALOG_PFD_480 >> 0) & 0x3fU),
+    (float)(24 * 20 * 18) / ((CCM_ANALOG_PFD_480 >> 8) & 0x3fU),
+    (float)(24 * 22)};
 const uint32_t ram_clock_sel_psc[] = {
     ((7UL << 29UL) | (0UL << 8UL)), // 0. 49.5 MHz
     ((6UL << 29UL) | (0UL << 8UL)), // 1. 56.57143 MHz
@@ -3727,400 +4235,12 @@ const uint32_t ram_clock_sel_psc[] = {
     ((2UL << 29UL) | (3UL << 8UL)), // 20. 176.0 MHz
     ((3UL << 29UL) | (1UL << 8UL))  // 21. 180.0 MHz (MAX for ESP-PSRAM64H)
 };
-const uint32_t ram_clock_sel_psc_size = sizeof(ram_clock_sel_psc) / sizeof(ram_clock_sel_psc[0]);
+const uint32_t ram_clock_sel_psc_size =
+    sizeof(ram_clock_sel_psc) / sizeof(ram_clock_sel_psc[0]);
 
-static uint8_t getNum() { 
-    const uint32_t reg = GPIO6_PSR;
-    uint8_t val = (reg & CORE_PIN16_BITMASK) > 0;
-    val = (val << 1U) | ((reg & CORE_PIN17_BITMASK) > 0);
-    val = (val << 1U) | ((reg & CORE_PIN18_BITMASK) > 0);
-    val = (val << 1U) | ((reg & CORE_PIN19_BITMASK) > 0);
-    val = (val << 1U) | ((reg & CORE_PIN20_BITMASK) > 0);
-    val = (val << 1U) | ((reg & CORE_PIN21_BITMASK) > 0);
-    val = (val << 1U) | ((reg & CORE_PIN22_BITMASK) > 0);
-    val = (val << 1U) | ((reg & CORE_PIN23_BITMASK) > 0);
-    return val;
-}
-
-void setup() {
-    // put your setup code here, to run once:
-    sm_set_default_pool(extmem_pool, EXTMEM_FLASH_SIZE, true, nullptr);
-    usb_mouse_screen_size(1920, 1080, false);
-    Serial.begin(0);
-    delay(1000);
-
-    pinMode(5, INPUT_PULLUP);
-    pinMode(4, INPUT_PULLUP);
-    for (int i = 16; i < 24; i++)
-        pinMode(i, INPUT_PULLDOWN);
-    pinMode(LED_BUILTIN, OUTPUT);
-    tx_str = (char*)txt;
-    Serial.println("Initializing LittleFS ...");
-
-    diskSize = PROG_FLASH_SIZE;
-
-    // checks that the LittFS program has started with the disk size specified
-    while (!myfs.begin(diskSize)) {
-        Serial.printf("Error starting %s\n", "PROGRAM FLASH DISK");
-        delay(100);
-    }
-    File file = myfs.open("/file", FILE_READ);
-    if (file) {
-        tx_str = "";
-        int c = file.read();
-        while(c >= 0) {
-            tx_str += (char) c;
-            c = file.read();
-        }
-        file.close();
-        Serial.printf("Loaded %lu bytes\n", (int) tx_str.length());
-    } else {
-        Serial.printf("File Not Found\n");
-        file = myfs.open("/file", FILE_WRITE_BEGIN);
-        file.close();
-    }
-    for (int i = 4; i < 20; i++) {
-        ms_table[i] = ms_table[i-3] * 10;
-    }
-}
-
-void process_char(char c) {
-
-    // backspace received
-    static bool enable_backspace_clear = true;
-    if (c == '\b' && enable_backspace_clear) {
-        rx_str = "";
-        Serial.println("cleared");
-        return;
-    }
-
-    // escape received
-    if (c == '\033') {
-        Serial.println();
-        if (strncmp(rx_str.c_str(), "KB bkspc", 8) == 0 &&
-            rx_str.length() == 8) {
-            rx_str = "";
-            enable_backspace_clear = !enable_backspace_clear;
-            Serial.println((enable_backspace_clear)
-                               ? "Backspace clears RX buffer"
-                               : "Backspace is normal key");
-            return;
-        }
-
-        // set KB delay
-        if (strncmp(rx_str.c_str(), "KB delay ", 9) == 0 &&
-            rx_str.length() > 9 && rx_str.length() < 19) {
-
-            EXTString kb_delay_str(rx_str.substring(9).c_str());
-            kb_delay_str.trim();
-
-            kb_delay = kb_delay_str.toInt();
-            kb_delay = (kb_delay > 1000000) ? 1000000 : kb_delay;
-
-            rx_str = "";
-            Serial.printf("Key Delay: %lu ms\n", kb_delay);
-            Serial.printf("Report Rate: %lu Hz\n",
-                          (1000000UL / (kb_delay > 125U ? kb_delay : 125U)));
-            return;
-        }
-
-        // get KB delay
-        if (strncmp(rx_str.c_str(), "KB delay", 8) == 0 &&
-            rx_str.length() == 8) {
-
-            rx_str = "";
-            Serial.printf("Key Delay: %lu ms\n", kb_delay);
-            Serial.printf("Report Rate: %lu Hz\n",
-                          (1000000UL / (kb_delay > 125U ? kb_delay : 125U)));
-            return;
-        }
-
-        // get text position
-        if (strncmp(rx_str.c_str(), "KB pos", 6) == 0 && rx_str.length() == 6) {
-
-            rx_str = "";
-            Serial.printf("Key Pos: %lu\n", type_pos);
-            return;
-        }
-
-        // set text position
-        if (strncmp(rx_str.c_str(), "KB pos ", 7) == 0 && rx_str.length() > 7 &&
-            rx_str.length() < 17) {
-
-            EXTString kb_pos_str(rx_str.substring(7).c_str());
-            kb_pos_str.trim();
-
-            type_pos = kb_pos_str.toInt();
-            type_pos = (type_pos >= tx_str.length()) ? (tx_str.length() - 1)
-                                                     : type_pos;
-
-            rx_str = "";
-            Serial.printf("Key Pos: %lu\n", type_pos);
-            return;
-        }
-
-        // get continuous
-        if (strncmp(rx_str.c_str(), "KB len", 6) == 0 && rx_str.length() == 6) {
-
-            rx_str = "";
-            Serial.printf("Length: %lu\n", tx_str.length());
-            return;
-        }
-
-        static int mouse_x = 0;
-        static int mouse_y = 0;
-        // mouse
-        if (strncmp(rx_str.c_str(), "KB mouse x ", 11) == 0 && rx_str.length() > 11 &&
-            rx_str.length() < 18) {
-
-            EXTString kb_pos_str(rx_str.substring(11).c_str());
-            kb_pos_str.trim();
-            mouse_x = kb_pos_str.toInt();
-            rx_str = "";
-            usb_mouse_position(mouse_x, mouse_y);
-            Serial.printf("Pos: %lu, %lu\n", mouse_x, mouse_y);
-            return;
-        }
-
-        // mouse
-        if (strncmp(rx_str.c_str(), "KB mouse y ", 11) == 0 && rx_str.length() > 11 &&
-            rx_str.length() < 18) {
-
-            EXTString kb_pos_str(rx_str.substring(11).c_str());
-            kb_pos_str.trim();
-            mouse_y = kb_pos_str.toInt();
-            rx_str = "";
-            usb_mouse_position(mouse_x, mouse_y);
-            Serial.printf("Pos: %lu, %lu\n", mouse_x, mouse_y);
-            return;
-        }
-
-        // load data from SPIFFS to tx_str
-        if (strncmp(rx_str.c_str(), "KB load", 7) == 0 && rx_str.length() == 7) {
-
-            rx_str = "";
-            Serial.println("loading");
-
-            // open file
-            File file = myfs.open("/file", FILE_READ);
-
-            // read file
-            if (file) {
-                tx_str = "";
-                int c = file.read();
-                while(c >= 0) {
-                    tx_str += (char) c;
-                    c = file.read();
-                }
-                file.close();
-                Serial.printf("Loaded %lu bytes\n", (uint32_t)tx_str.length());
-            } else {
-                Serial.println("File Not Found");
-            }
-            return;
-        }
-
-        if (strncmp(rx_str.c_str(), "KB save", 7) == 0 && rx_str.length() == 7) {
-            
-            Serial.println("saving");
-            rx_str = "";
-
-            // open file
-            myfs.remove("/file");
-            File file = myfs.open("/file", FILE_WRITE_BEGIN);
-
-            // write to file
-            if (file) {
-                file.write((const uint8_t*)tx_str.c_str(), tx_str.length());
-                file.flush();
-                Serial.printf("Wrote %lu bytes\n", (uint32_t) file.position());
-                file.close();
-            } else {
-                Serial.println("Cannot Write To File");
-            }
-            return;
-        }
-        // test EXT RAM speed
-        if (strncmp(rx_str.c_str(), "KB ram test", 11) == 0 && rx_str.length() == 11) {
-            
-            rx_str = "";
-
-            // calculate clock frq
-            float frequency = clocks[(CCM_CBCMR >> 8) & 3] /
-                              (float)(((CCM_CBCMR >> 29) & 7) + 1);
-
-            Serial.printf("CCM_CBCMR = %08lX (%.1f MHz)\n", CCM_CBCMR,
-                          frequency);
-            
-            // allocate memory
-            uint32_t str_size = STR_SIZE;
-            char* str = (char*)sm_malloc(str_size);
-
-            uint32_t arm_cyccnt_write = ARM_DWT_CYCCNT;
-            memset(str, 'U', str_size);
-            arm_cyccnt_write = ARM_DWT_CYCCNT - arm_cyccnt_write;
-
-            bool memory_good = true;
-            for (char* i = str; i < str + str_size; i++) {
-                if (*i != 'U') {
-                    memory_good = false;
-                    break;
-                }
-            }
-            if (memory_good) {
-                Serial.printf("write count: %lu, ms: %lf, per_bytes: %lf, MB/s: %lf\n", 
-                            str_size, (double)arm_cyccnt_write / F_CPU_ACTUAL,
-                            (double)arm_cyccnt_write / str_size, 
-                            (double)((uint64_t)F_CPU_ACTUAL * str_size) / arm_cyccnt_write / 1000000.0);
-            } else {
-                Serial.printf("Memory Error\n");
-            }
-            sm_free(str);
-
-            return;
-        }
-
-        // set EXT RAM speed
-        if (strncmp(rx_str.c_str(), "KB ram ", 7) == 0 && rx_str.length() > 7 &&
-            rx_str.length() < 10) {
-            
-            EXTString kb_pos_str(rx_str.substring(7).c_str());
-            kb_pos_str.trim();
-            rx_str = "";
-
-            // get clock combi index
-            uint32_t index = kb_pos_str.toInt();
-            index = (index < ram_clock_sel_psc_size)
-                        ? index
-                        : ram_clock_sel_psc_size - 1;
-
-            // set clock prescaler & source
-            CCM_CBCMR = (CCM_CBCMR & ~(7UL << 29UL) & ~(3UL << 8UL)) |
-                        ram_clock_sel_psc[index];
-
-            // calculate clock frq
-            float frequency = clocks[(CCM_CBCMR >> 8) & 3] /
-                              (float)(((CCM_CBCMR >> 29) & 7) + 1);
-
-            Serial.printf("CCM_CBCMR = %08lX (%.1f MHz)\n", CCM_CBCMR,
-                          frequency);
-
-            return;
-        }
-        // get EXT RAM speed
-        if (strncmp(rx_str.c_str(), "KB ram", 6) == 0 && rx_str.length() == 6) {
-            
-            rx_str = "";
-
-            // calculate clock frq
-            float frequency = clocks[(CCM_CBCMR >> 8) & 3] /
-                              (float)(((CCM_CBCMR >> 29) & 7) + 1);
-
-            Serial.printf("CCM_CBCMR = %08lX (%.1f MHz)\n", CCM_CBCMR,
-                          frequency);
-
-            return;
-        }
-
-        // change string
-        if (!tx_lock && rx_str.length()) {
-            tx_lock = true;
-            tx_str.move(rx_str);
-            type_pos = 0UL;
-            tx_lock = false;
-            Serial.printf("Received %lu bytes\n", (uint32_t)tx_str.length());
-            Serial.printf("Address of tx_str         : 0x%08lx\n", &tx_str);
-            Serial.printf("Address of tx_str.c_str() : 0x%08lx\n", tx_str.c_str());
-            Serial.printf("Address of rx_str         : 0x%08lx\n", &rx_str);
-            Serial.printf("Address of rx_str.c_str() : 0x%08lx\n", rx_str.c_str());
-        }
-    } else {
-        rx_str += (char)c;
-        Serial.print(c);
-    }
-}
-
-void loop() {
-
-    static uint16_t last = 0x100U;
-    static uint32_t ms = 0;
-    static uint32_t last_delay_ms = 0;
-
-    static bool pressed = false;
-
-    bool pin_now = (CORE_PIN5_PINREG & CORE_PIN5_BITMASK) > 0;
-    bool reset_pin = (CORE_PIN4_PINREG & CORE_PIN4_BITMASK) > 0;
-
-    while (Serial.available()) {
-        process_char(Serial.read());
-    }
-
-    if (!reset_pin) {
-        if (!pressed) type_pos = 0;
-        // static uint32_t last_mouse_ms = 0;
-        // DELAY_WRAP(
-        //     usb_mouse_position(960 + x_table[last_mouse_ms], 540 + y_table[last_mouse_ms]);
-        // , kb_delay);
-        // last_mouse_ms = (last_mouse_ms + 20) % len_table;
-        // DELAY_WRAP(
-        //     usb_mouse_position(960 + x_table[last_mouse_ms], 540 + y_table[last_mouse_ms]);
-        // , kb_delay);
-        // DELAY_WRAP(
-        //     usb_mouse_position(960, 540);
-        // , kb_delay);
-    }
-    type_pos = (!reset_pin && !pressed)? 0 : type_pos;
-
-    digitalWriteFast(LED_BUILTIN, keyboard_leds & 0x02U);
-    if (!pin_now && !pressed) {
-        if (millis() - ms > 10) {
-            pressed = true;
-            ms = millis();
-            if (type_pos < tx_str.length()) {
-                DELAY_WRAP(
-                    report.press(tx_str[type_pos++]);
-                    report.sendKeyReport();
-                , kb_delay);
-            }
-        }
-    } else if (pin_now && pressed) {
-        if (millis() - ms > 10) {
-            pressed = false;
-            ms = millis();
-            DELAY_WRAP(
-                report.releaseAll(); 
-                report.sendKeyReport();
-            , kb_delay);
-            if (type_pos == tx_str.length()) type_pos = 0;
-        }
-    } else if (!pin_now && pressed && (millis() - ms >= 500)) {
-        
-        DELAY_WRAP(
-            report.releaseAll(); 
-            report.sendKeyReport();
-        , kb_delay);
-        if (type_pos < tx_str.length()) {
-            DELAY_WRAP(
-                report.press(tx_str[type_pos++]); 
-                report.sendKeyReport();
-            , kb_delay);
-        }
-        if (!reset_pin && (type_pos == tx_str.length())) 
-            type_pos = 0;
-    }
-
-    ms = millis() - ms > 1000 ? millis() - 1000 : ms;
-
-    uint16_t tmp = getNum();
-    if (tmp != last && (millis() - last_delay_ms > 20)) {
-        last = tmp;
-        last_delay_ms = millis();
-        kb_delay = ms_table[(tmp & 0x0f) > 12 ? 12 : (tmp & 0x0f)];
-
-        Serial.printf("Delay: %lu, Report Rate: %lu Hz\n", kb_delay,
-                        (1000000UL / (kb_delay > 125U ? kb_delay : 125U)));
-    }
-    last_delay_ms = millis() - last_delay_ms > 1000 ? millis() - 1000 : last_delay_ms;
+int psram_init() {
+    // set default psram pool
+    return sm_set_default_pool(extmem_pool, EXTMEM_SIZE, true, nullptr);
 }
 [@file: src/text.c]
 unsigned char txt[] = "#include <Arduino.h>\r\n#include \"text.h\"\r\n#include \"HIDKeyboard.h\"\r\n#include <usb_keyboard.h>\r\n\r\n#define USB_LED_NUM_LOCK 0\r\n#define USB_LED_CAPS_LOCK 1\r\n#define USB_LED_SCROLL_LOCK 2\r\n#define USB_LED_COMPOSE 3\r\n#define USB_LED_KANA 4\r\n\r\nextern int usb_keyboard_transmit(int endpoint, const uint8_t *data, uint32_t len);\r\nstatic Reports report;\r\n\r\nvoid setup() {\r\n    // put your setup code here, to run once:\r\n    Keyboard.begin();\r\n    pinMode(5, INPUT_PULLUP);\r\n    pinMode(LED_BUILTIN, OUTPUT);\r\n}\r\n\r\nvoid loop() {\r\n    static uint32_t ms = 0;\r\n    static uint32_t i = 0;\r\n    static bool pressed = false;\r\n    bool pin_now = (CORE_PIN5_PINREG & CORE_PIN5_BITMASK) > 0;\r\n    digitalWriteFast(LED_BUILTIN, keyboard_leds & 0x02U);\r\n    if (!pin_now && !pressed) {\r\n        // char tmpp[] = \"1234567890-=qwertyuiop[]\\\\asdfghjkl;\'zxcvbnm,./\\b\\n\\t\";\r\n        // min time before press\r\n        if (millis() - ms > 10) {\r\n            // report.pressMulti((uint8_t*)\"abcdefghijklmnopqrstuvwxyz1234567890-=[]\\\\;\'\\n,./`\\b\\t \" STR_CAPS_LOCK STR_DELETE STR_PAGE_UP STR_PAGE_DOWN STR_NUM_LOCK);\r\n            if (i < size_txt) {\r\n                report.press(txt[i++]);\r\n                report.sendKeyReport();\r\n            }\r\n            pressed = true;\r\n            ms = millis();\r\n        }\r\n    } else if (pin_now && pressed) {\r\n        // release min time\r\n        if (millis() - ms > 10) {\r\n            report.releaseAll();\r\n            report.sendKeyReport();\r\n            if (i == size_txt) i = 0;\r\n            pressed = false;\r\n            ms = millis();\r\n        }\r\n    } else if (!pin_now && pressed && (millis() - ms >= 500)) {\r\n        static bool clear = false;\r\n        if (i < size_txt) {\r\n            report.releaseAll();\r\n            report.sendKeyReport();\r\n            report.press(txt[i++]);\r\n            report.sendKeyReport();\r\n            clear = true;\r\n        } else if (clear) {\r\n            report.releaseAll();\r\n            report.sendKeyReport();\r\n            clear = false;\r\n        }\r\n    }\r\n    ms = millis() - ms > 1000? millis() - 1000: ms;\r\n}"; unsigned long long size_txt = sizeof(txt) - 1;
@@ -4137,6 +4257,184 @@ in the development cycle.
 More information about PlatformIO Unit Testing:
 - https://docs.platformio.org/en/latest/advanced/unit-testing/index.html
 
+[@file: to_replace/memory_test.cpp]
+#include <Arduino.h>
+uint32_t rTime;
+uint32_t rTCnt = 0;
+extern "C" uint8_t external_psram_size;
+
+bool memory_ok = false;
+uint32_t *memory_begin, *memory_end;
+
+bool check_fixed_pattern(uint32_t pattern);
+bool check_lfsr_pattern(uint32_t seed);
+
+void setup() {
+    while (!Serial)
+        ; // wait
+    pinMode(13, OUTPUT);
+    uint8_t size = external_psram_size;
+    Serial.printf("EXTMEM Memory Test, %d Mbyte\n", size);
+    if (size == 0) return;
+    const float clocks[4] = {396.0f, 720.0f, 664.62f, 528.0f};
+    CCM_CBCMR = (CCM_CBCMR & ~(7UL << 29UL) & ~(3UL << 8UL)) | (3UL << 29UL) |
+                (1UL << 8UL);
+    float frequency =
+        clocks[(CCM_CBCMR >> 8) & 3] / (float)(((CCM_CBCMR >> 29) & 7) + 1);
+    Serial.printf(" CCM_CBCMR=%08X (%.1f MHz)\n", CCM_CBCMR, frequency);
+    memory_begin = (uint32_t*)(0x70000000);
+    memory_end = (uint32_t*)(0x70000000 + size * 1048576);
+    elapsedMillis msec = 0;
+    if (!check_fixed_pattern(0x5A698421)) return;
+    if (!check_lfsr_pattern(2976674124ul)) return;
+    if (!check_lfsr_pattern(1438200953ul)) return;
+    if (!check_lfsr_pattern(3413783263ul)) return;
+    if (!check_lfsr_pattern(1900517911ul)) return;
+    if (!check_lfsr_pattern(1227909400ul)) return;
+    if (!check_lfsr_pattern(276562754ul)) return;
+    if (!check_lfsr_pattern(146878114ul)) return;
+    if (!check_lfsr_pattern(615545407ul)) return;
+    if (!check_lfsr_pattern(110497896ul)) return;
+    if (!check_lfsr_pattern(74539250ul)) return;
+    if (!check_lfsr_pattern(4197336575ul)) return;
+    if (!check_lfsr_pattern(2280382233ul)) return;
+    if (!check_lfsr_pattern(542894183ul)) return;
+    if (!check_lfsr_pattern(3978544245ul)) return;
+    if (!check_lfsr_pattern(2315909796ul)) return;
+    if (!check_lfsr_pattern(3736286001ul)) return;
+    if (!check_lfsr_pattern(2876690683ul)) return;
+    if (!check_lfsr_pattern(215559886ul)) return;
+    if (!check_lfsr_pattern(539179291ul)) return;
+    if (!check_lfsr_pattern(537678650ul)) return;
+    if (!check_lfsr_pattern(4001405270ul)) return;
+    if (!check_lfsr_pattern(2169216599ul)) return;
+    if (!check_lfsr_pattern(4036891097ul)) return;
+    if (!check_lfsr_pattern(1535452389ul)) return;
+    if (!check_lfsr_pattern(2959727213ul)) return;
+    if (!check_lfsr_pattern(4219363395ul)) return;
+    if (!check_lfsr_pattern(1036929753ul)) return;
+    if (!check_lfsr_pattern(2125248865ul)) return;
+    if (!check_lfsr_pattern(3177905864ul)) return;
+    if (!check_lfsr_pattern(2399307098ul)) return;
+    if (!check_lfsr_pattern(3847634607ul)) return;
+    if (!check_lfsr_pattern(27467969ul)) return;
+    if (!check_lfsr_pattern(520563506ul)) return;
+    if (!check_lfsr_pattern(381313790ul)) return;
+    if (!check_lfsr_pattern(4174769276ul)) return;
+    if (!check_lfsr_pattern(3932189449ul)) return;
+    if (!check_lfsr_pattern(4079717394ul)) return;
+    if (!check_lfsr_pattern(868357076ul)) return;
+    if (!check_lfsr_pattern(2474062993ul)) return;
+    if (!check_lfsr_pattern(1502682190ul)) return;
+    if (!check_lfsr_pattern(2471230478ul)) return;
+    if (!check_lfsr_pattern(85016565ul)) return;
+    if (!check_lfsr_pattern(1427530695ul)) return;
+    if (!check_lfsr_pattern(1100533073ul)) return;
+    if (!check_fixed_pattern(0x55555555)) return;
+    if (!check_fixed_pattern(0x33333333)) return;
+    if (!check_fixed_pattern(0x0F0F0F0F)) return;
+    if (!check_fixed_pattern(0x00FF00FF)) return;
+    if (!check_fixed_pattern(0x0000FFFF)) return;
+    if (!check_fixed_pattern(0xAAAAAAAA)) return;
+    if (!check_fixed_pattern(0xCCCCCCCC)) return;
+    if (!check_fixed_pattern(0xF0F0F0F0)) return;
+    if (!check_fixed_pattern(0xFF00FF00)) return;
+    if (!check_fixed_pattern(0xFFFF0000)) return;
+    if (!check_fixed_pattern(0xFFFFFFFF)) return;
+    if (!check_fixed_pattern(0x00000000)) return;
+    Serial.printf(" test ran for %.2f seconds\n", (float)msec / 1000.0f);
+    Serial.printf(" %d MB's test ran at %.2f MB/sec overall\n",
+                  2 * rTCnt * external_psram_size,
+                  2 * rTCnt * external_psram_size * 1024.0 / (float)msec);
+    Serial.println("All memory tests passed :-)");
+    memory_ok = true;
+}
+
+bool fail_message(volatile uint32_t* location, uint32_t actual,
+                  uint32_t expected) {
+    Serial.printf(" Error at %08X, read %08X but expected %08X\n",
+                  (uint32_t)location, actual, expected);
+    return false;
+}
+
+// fill the entire RAM with a fixed pattern, then check it
+bool check_fixed_pattern(uint32_t pattern) {
+    volatile uint32_t* p;
+    Serial.printf("testing with fixed pattern %08X\t", pattern);
+    rTime = micros();
+    for (p = memory_begin; p < memory_end; p++) {
+        *p = pattern;
+    }
+    rTime = micros() - rTime;
+    Serial.printf("\tfill us:%d MB/s:%.2f\t", rTime,
+                  external_psram_size * 1024 * 1024.0 / rTime);
+    arm_dcache_flush_delete((void*)memory_begin,
+                            (uint32_t)memory_end - (uint32_t)memory_begin);
+    rTime = micros();
+    for (p = memory_begin; p < memory_end; p++) {
+        uint32_t actual = *p;
+        if (actual != pattern) return fail_message(p, actual, pattern);
+    }
+    rTime = micros() - rTime;
+    Serial.printf("\ttest us:%d MB/s:%.2f\n", rTime,
+                  external_psram_size * 1024 * 1024.0 / rTime);
+    rTCnt++;
+    return true;
+}
+
+// fill the entire RAM with a pseudo-random sequence, then check it
+bool check_lfsr_pattern(uint32_t seed) {
+    volatile uint32_t* p;
+    uint32_t reg;
+
+    Serial.printf("testing with pseudo-random sequence, seed=%u\t", seed);
+    reg = seed;
+    uint32_t rTime;
+    rTime = micros();
+    for (p = memory_begin; p < memory_end; p++) {
+        *p = reg;
+        for (int i = 0; i < 3; i++) {
+            if (reg & 1) {
+                reg >>= 1;
+                reg ^= 0x7A5BC2E3;
+            } else {
+                reg >>= 1;
+            }
+        }
+    }
+    rTime = micros() - rTime;
+    Serial.printf("\tfill us:%d MB/s:%.2f\t", rTime,
+                  external_psram_size * 1024 * 1024.0 / rTime);
+    arm_dcache_flush_delete((void*)memory_begin,
+                            (uint32_t)memory_end - (uint32_t)memory_begin);
+    reg = seed;
+    rTime = micros();
+    for (p = memory_begin; p < memory_end; p++) {
+        uint32_t actual = *p;
+        if (actual != reg) return fail_message(p, actual, reg);
+        // Serial.printf(" reg=%08X\n", reg);
+        for (int i = 0; i < 3; i++) {
+            if (reg & 1) {
+                reg >>= 1;
+                reg ^= 0x7A5BC2E3;
+            } else {
+                reg >>= 1;
+            }
+        }
+    }
+    rTime = micros() - rTime;
+    Serial.printf("\ttest us:%d MB/s:%.2f\n", rTime,
+                  external_psram_size * 1024 * 1024.0 / rTime);
+    rTCnt++;
+    return true;
+}
+
+void loop() {
+    digitalWrite(13, HIGH);
+    delay(100);
+    if (!memory_ok) digitalWrite(13, LOW); // rapid blink if any test fails
+    delay(100);
+}
 [@file: to_replace/usb_desc.c]
 /* Teensyduino Core Library
  * http://www.pjrc.com/teensy/
