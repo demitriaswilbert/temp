@@ -537,52 +537,24 @@ const uint32_t _asciimap[] =
 #include <stdio.h>
 
 int main() {
-    char ch[] = STR_F5 STR_F6 STR_F7 STR_F10 STR_F11 STR_F12 "aezakmi" "hesoyam" "cvwkxam" "uzumymw" "vkypqcf" "worshipme" "helloladies" "toodamnhot" "fullclip" STR_ESC;
-    // char ch[] = \
-    // "KB ram 0" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 1" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 2" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 3" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 4" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 5" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 6" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 7" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 8" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 9" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 10" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 11" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 12" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 13" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 14" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 15" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 16" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 17" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 18" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 19" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 20" STR_ESC\
-    // "KB ram test" STR_ESC\
-    // "KB ram 21" STR_ESC\
-    // "KB ram test" STR_ESC;
+    // char ch[] = STR_F5 STR_F6 STR_F7 STR_F10 STR_F11 STR_F12 "aezakmi" "hesoyam" "cvwkxam" "uzumymw" "vkypqcf" "worshipme" "helloladies" "toodamnhot" "fullclip" STR_ESC;
+    char ch[] = \
+    "KB ram 0" STR_ESC\
+    "KB ram test" STR_ESC\
+    "KB ram 1" STR_ESC\
+    "KB ram test" STR_ESC\
+    "KB ram 2" STR_ESC\
+    "KB ram test" STR_ESC\
+    "KB ram 3" STR_ESC\
+    "KB ram test" STR_ESC\
+    "KB ram 4" STR_ESC\
+    "KB ram test" STR_ESC\
+    "KB ram 5" STR_ESC\
+    "KB ram test" STR_ESC\
+    "KB ram 6" STR_ESC\
+    "KB ram test" STR_ESC\
+    "KB ram 7" STR_ESC\
+    "KB ram test" STR_ESC;
     FILE* fp = fopen("new.txt", "wb");
     fwrite(ch, sizeof(ch), 1, fp);
 }
@@ -674,17 +646,25 @@ for i in range(len(sd)):
 (0UL << 29UL) | (2UL << 8UL) // 30. 664.619995 MHz
 (0UL << 29UL) | (1UL << 8UL) // 31. 720.0 MHz
 
-KB ram 0:	(49.5 MHz),	    per_bytes: 39.623991, MB/s: 15.142341
-KB ram 1:	(56.6 MHz),	    per_bytes: 34.643385, MB/s: 17.319324
-KB ram 2:	(66.0 MHz),	    per_bytes: 30.009388, MB/s: 19.993743
-KB ram 3:	(66.0 MHz),	    per_bytes: 29.973628, MB/s: 20.017597
-KB ram 4:	(75.4 MHz),	    per_bytes: 26.348697, MB/s: 22.771524
-KB ram 5:	(79.2 MHz),	    per_bytes: 25.339239, MB/s: 23.678690
-KB ram 6:	(83.1 MHz),	    per_bytes: 24.286850, MB/s: 24.704727
-KB ram 7:	(88.0 MHz),	    per_bytes: 22.944839, MB/s: 26.149671
-KB ram 8:	(90.0 MHz),	    per_bytes: 22.438235, MB/s: 26.740071
-KB ram 9:	(94.9 MHz),	    per_bytes: 21.422368, MB/s: 28.008109
-KB ram 10:	(99.0 MHz),	    per_bytes: 20.747738, MB/s: 28.918815
+KB ram 0:	(30.8  MHz),	per_bytes: 60.976564, MB/s: 9.839846
+KB ram 1:	(33.9  MHz),	per_bytes: 56.189805, MB/s: 10.678094
+KB ram 2:	(35.2  MHz),	per_bytes: 54.088964, MB/s: 11.092836
+KB ram 3:	(36.0  MHz),	per_bytes: 52.985105, MB/s: 11.323937
+KB ram 4:	(38.7  MHz),	per_bytes: 49.185309, MB/s: 12.198764
+KB ram 5:	(41.1  MHz),	per_bytes: 46.392587, MB/s: 12.933101
+KB ram 6:	(41.1  MHz),	per_bytes: 46.392558, MB/s: 12.933109
+KB ram 7:	(45.2  MHz),	per_bytes: 42.419322, MB/s: 14.144498
+KB ram 0:	(49.5  MHz),    per_bytes: 39.623991, MB/s: 15.142341
+KB ram 1:	(56.6  MHz),    per_bytes: 34.643385, MB/s: 17.319324
+KB ram 2:	(66.0  MHz),    per_bytes: 30.009388, MB/s: 19.993743
+KB ram 3:	(66.0  MHz),    per_bytes: 29.973628, MB/s: 20.017597
+KB ram 4:	(75.4  MHz),    per_bytes: 26.348697, MB/s: 22.771524
+KB ram 5:	(79.2  MHz),    per_bytes: 25.339239, MB/s: 23.678690
+KB ram 6:	(83.1  MHz),    per_bytes: 24.286850, MB/s: 24.704727
+KB ram 7:	(88.0  MHz),    per_bytes: 22.944839, MB/s: 26.149671
+KB ram 8:	(90.0  MHz),    per_bytes: 22.438235, MB/s: 26.740071
+KB ram 9:	(94.9  MHz),    per_bytes: 21.422368, MB/s: 28.008109
+KB ram 10:	(99.0  MHz),    per_bytes: 20.747738, MB/s: 28.918815
 KB ram 11:	(102.9 MHz),	per_bytes: 19.989192, MB/s: 30.016221
 KB ram 12:	(105.6 MHz),	per_bytes: 19.605323, MB/s: 30.603934
 KB ram 13:	(110.8 MHz),	per_bytes: 18.717328, MB/s: 32.055858
@@ -696,6 +676,19 @@ KB ram 18:	(144.0 MHz),	per_bytes: 14.504858, MB/s: 41.365451
 KB ram 19:	(166.2 MHz),	per_bytes: 12.592710, MB/s: 47.646616
 KB ram 20:	(176.0 MHz),	per_bytes: 11.848444, MB/s: 50.639563
 KB ram 21:	(180.0 MHz),	per_bytes: 11.531907, MB/s: 52.029558
+KB ram 22:	(198.0 MHz),	per_bytes: 10.701723, MB/s: 56.065738
+KB ram 23:	(221.5 MHz),	per_bytes: 9.762527 , MB/s: 61.459500
+KB ram 24:	(240.0 MHz),	per_bytes: 8.925637 , MB/s: 67.222091
+KB ram 25:	(264.0 MHz),	per_bytes: 8.352914 , MB/s: 71.831217
+KB ram 26:	(332.3 MHz),	per_bytes: 6.858916 , MB/s: 87.477382
+KB ram 27:	(360.0 MHz),	per_bytes: 5.950275 , MB/s: 100.835669
+KB ram 28:	(396.0 MHz),	per_bytes: 5.663282 , MB/s: 105.945626
+KB ram 29:	(528.0 MHz),	per_bytes: 4.753071 , MB/s: 126.234180
+KB ram 30:	(664.6 MHz),	per_bytes: 4.187002 , MB/s: 143.300618
+KB ram 31:	(720.0 MHz),	per_bytes: 4.062057 , MB/s: 147.708397
+
+[@file: new.txt]
+
 [@file: platformio.ini]
 ; PlatformIO Project Configuration File
 ;
@@ -1630,6 +1623,7 @@ extern uint32_t type_pos;
 
 void process_char(Stream& st, char c);
 void process_char_loop(Stream& st);
+void memory_test(Stream& st);
 
 #endif
 [@file: include/psramctrl.h]
@@ -1638,24 +1632,27 @@ void process_char_loop(Stream& st);
 
 #include <Arduino.h>
 #include "static_malloc.h"
+#include <vector>
+#include <algorithm>
+
+typedef struct {
+    float frq;
+    uint32_t mask;
+} clock_info;
 
 // EXTMEM POOL
 #define EXTMEM_SIZE 0x700000UL
-extern const float clock_source[];
-extern const uint32_t ram_clock_sel_psc[];
-extern const uint32_t ram_clock_sel_psc_size;
+extern std::vector<clock_info> ram_clock_sel_psc;
 
-static inline void psram_clock_speed_set(uint16_t index) {
-    index = (index < ram_clock_sel_psc_size)?
-            index : ram_clock_sel_psc_size - 1;
-    CCM_CBCMR = (CCM_CBCMR & ~(7UL << 29UL) & ~(3UL << 8UL)) |
-                        ram_clock_sel_psc[index];
-}
+#define CBCMR_BIT_MASK ((7UL << 29U) | (3UL << 8U)) 
 
-static inline float psram_clock_speed_get() {
-    return (clock_source[(CCM_CBCMR >> 8) & 3] /
-            (float)(((CCM_CBCMR >> 29) & 7) + 1));
-}
+void print_ram_speeds(Stream& st);
+
+float clock_source(int i);
+
+void psram_clock_speed_set(uint16_t index);
+
+float psram_clock_speed_get();
 
 int psram_init();
 
@@ -3702,6 +3699,46 @@ bool tx_lock = false;
 uint32_t kb_delay = 0;
 uint32_t type_pos = 0;
 
+void memory_test(Stream& st) {
+    // calculate clock frq
+    float frequency = psram_clock_speed_get();
+
+    st.printf("CCM_CBCMR = %08lX (%f MHz)\n", CCM_CBCMR, frequency);
+
+    // allocate memory
+    uint32_t str_size = 0x200000UL;
+    char* str = (char*)sm_malloc(str_size);
+
+    // test memset speed
+    uint32_t arm_cyccnt_write = ARM_DWT_CYCCNT;
+    memset(str, 'U', str_size);
+    arm_cyccnt_write = ARM_DWT_CYCCNT - arm_cyccnt_write;
+
+    // check integrity
+    bool mem_ok = true;
+    for (char* i = str; i < str + str_size && *i == 'U'; i++) {
+        if (*i != 'U') {
+            mem_ok = false;
+            break;
+        }
+    }
+
+    // log
+    if (mem_ok) {
+        st.printf(
+            "write count: %lu, ms: %lf, per_bytes: %lf, MB/s: %lf\n",
+            str_size, (double)arm_cyccnt_write / F_CPU_ACTUAL,
+            (double)arm_cyccnt_write / str_size,
+            (double)((uint64_t)F_CPU_ACTUAL * str_size) /
+                arm_cyccnt_write / 1000000.0);
+    } else {
+        st.printf("Memory Error\n");
+    }
+
+    // free allocated memory
+    sm_free(str);
+}
+
 /**
  * @brief Process received character from serial
  *
@@ -3903,43 +3940,21 @@ void process_char(Stream& st, char c) {
 
             rx_str = "";
 
-            // calculate clock frq
-            float frequency = psram_clock_speed_get();
+            memory_test(st);
 
-            st.printf("CCM_CBCMR = %08lX (%.1f MHz)\n", CCM_CBCMR, frequency);
+            return;
+        }
 
-            // allocate memory
-            uint32_t str_size = 0x200000UL;
-            char* str = (char*)sm_malloc(str_size);
+        /**
+         * @brief Test PSRAM Speed
+         *
+         */
+        if (strncmp(rx_str.c_str(), "KB ram speed", 12) == 0 &&
+            rx_str.length() == 12) {
 
-            // test memset speed
-            uint32_t arm_cyccnt_write = ARM_DWT_CYCCNT;
-            memset(str, 'U', str_size);
-            arm_cyccnt_write = ARM_DWT_CYCCNT - arm_cyccnt_write;
+            rx_str = "";
 
-            // check integrity
-            bool mem_ok = true;
-            for (char* i = str; i < str + str_size && *i == 'U'; i++) {
-                if (*i != 'U') {
-                    mem_ok = false;
-                    break;
-                }
-            }
-
-            // log
-            if (mem_ok) {
-                st.printf(
-                    "write count: %lu, ms: %lf, per_bytes: %lf, MB/s: %lf\n",
-                    str_size, (double)arm_cyccnt_write / F_CPU_ACTUAL,
-                    (double)arm_cyccnt_write / str_size,
-                    (double)((uint64_t)F_CPU_ACTUAL * str_size) /
-                        arm_cyccnt_write / 1000000.0);
-            } else {
-                st.printf("Memory Error\n");
-            }
-
-            // free allocated memory
-            sm_free(str);
+            print_ram_speeds(st);
 
             return;
         }
@@ -3961,7 +3976,7 @@ void process_char(Stream& st, char c) {
             // calculate clock frq
             float frequency = psram_clock_speed_get();
 
-            st.printf("CCM_CBCMR = %08lX (%.1f MHz)\n", CCM_CBCMR, frequency);
+            st.printf("CCM_CBCMR = %08lX (%f MHz)\n", CCM_CBCMR, frequency);
 
             return;
         }
@@ -3973,7 +3988,7 @@ void process_char(Stream& st, char c) {
             // calculate clock frq
             float frequency = psram_clock_speed_get();
 
-            st.printf("CCM_CBCMR = %08lX (%.1f MHz)\n", CCM_CBCMR, frequency);
+            st.printf("CCM_CBCMR = %08lX (%f MHz)\n", CCM_CBCMR, frequency);
 
             return;
         }
@@ -4112,7 +4127,6 @@ void loop() {
     bool type_pin = (CORE_PIN5_PINREG & CORE_PIN5_BITMASK) > 0;
     bool reset_pin = (CORE_PIN4_PINREG & CORE_PIN4_BITMASK) > 0;
 
-
     // reset type pos when reset pin is pressed, but type pin isnt
     type_pos = (!reset_pin && !type_pin_pressed) ? 0 : type_pos;
 
@@ -4188,6 +4202,7 @@ void loop() {
         // log
         Serial.printf("Delay: %lu, Report Rate: %lu Hz\n", kb_delay,
                       (1000000UL / (kb_delay > 125U ? kb_delay : 125U)));
+        memory_test(Serial);
     }
 
     // cap all ms difference at 1000ms (prevent overflow)
@@ -4206,41 +4221,97 @@ static EXTMEM uint8_t extmem_pool[EXTMEM_SIZE];
  * @brief RAM speed data
  *
  */
-const float clock_source[4] = {
-    (float)(24 * 22 * 18) / ((CCM_ANALOG_PFD_528 >> 16) & 0x3fU),
-    (float)(24 * 20 * 18) / ((CCM_ANALOG_PFD_480 >> 0) & 0x3fU),
-    (float)(24 * 20 * 18) / ((CCM_ANALOG_PFD_480 >> 8) & 0x3fU),
-    (float)(24 * 22)};
-const uint32_t ram_clock_sel_psc[] = {
-    ((7UL << 29UL) | (0UL << 8UL)), // 0. 49.5 MHz
-    ((6UL << 29UL) | (0UL << 8UL)), // 1. 56.57143 MHz
-    ((5UL << 29UL) | (0UL << 8UL)), // 2. 66.0 MHz
-    ((7UL << 29UL) | (3UL << 8UL)), // 3. 66.0 MHz
-    ((6UL << 29UL) | (3UL << 8UL)), // 4. 75.428574 MHz
-    ((4UL << 29UL) | (0UL << 8UL)), // 5. 79.199997 MHz
-    ((7UL << 29UL) | (2UL << 8UL)), // 6. 83.077499 MHz
-    ((5UL << 29UL) | (3UL << 8UL)), // 7. 88.0 MHz
-    ((7UL << 29UL) | (1UL << 8UL)), // 8. 90.0 MHz
-    ((6UL << 29UL) | (2UL << 8UL)), // 9. 94.945717 MHz
-    ((3UL << 29UL) | (0UL << 8UL)), // 10. 99.0 MHz
-    ((6UL << 29UL) | (1UL << 8UL)), // 11. 102.85714 MHz
-    ((4UL << 29UL) | (3UL << 8UL)), // 12. 105.599998 MHz
-    ((5UL << 29UL) | (2UL << 8UL)), // 13. 110.769997 MHz
-    ((5UL << 29UL) | (1UL << 8UL)), // 14. 120.0 MHz
-    ((2UL << 29UL) | (0UL << 8UL)), // 15. 132.0 MHz
-    ((3UL << 29UL) | (3UL << 8UL)), // 16. 132.0 MHz
-    ((4UL << 29UL) | (2UL << 8UL)), // 17. 132.923996 MHz
-    ((4UL << 29UL) | (1UL << 8UL)), // 18. 144.0 MHz
-    ((3UL << 29UL) | (2UL << 8UL)), // 19. 166.154999 MHz
-    ((2UL << 29UL) | (3UL << 8UL)), // 20. 176.0 MHz
-    ((3UL << 29UL) | (1UL << 8UL))  // 21. 180.0 MHz (MAX for ESP-PSRAM64H)
+
+float clock_source(int i) {
+    float clocks[] = {
+        (float)(24 * 22 * 18) / ((CCM_ANALOG_PFD_528 >> 16) & 0x3fU),
+        (float)(24 * 20 * 18) / ((CCM_ANALOG_PFD_480 >> 0) & 0x3fU),
+        (float)(24 * 20 * 18) / ((CCM_ANALOG_PFD_480 >> 8) & 0x3fU),
+        (float)(24 * 22)
+    };
+    return clocks[i];
+}
+
+std::vector<clock_info> ram_clock_sel_psc = {
+    {49.5      , ((7UL << 29UL) | (0UL << 8UL))}, // 0.  
+    {56.57143  , ((6UL << 29UL) | (0UL << 8UL))}, // 1.  
+    {66.0      , ((5UL << 29UL) | (0UL << 8UL))}, // 2.  
+    {66.0      , ((7UL << 29UL) | (3UL << 8UL))}, // 3.  
+    {75.428574 , ((6UL << 29UL) | (3UL << 8UL))}, // 4.  
+    {79.199997 , ((4UL << 29UL) | (0UL << 8UL))}, // 5.  
+    {83.077499 , ((7UL << 29UL) | (2UL << 8UL))}, // 6.  
+    {88.0      , ((5UL << 29UL) | (3UL << 8UL))}, // 7.  
+    {90.0      , ((7UL << 29UL) | (1UL << 8UL))}, // 8.  
+    {94.945717 , ((6UL << 29UL) | (2UL << 8UL))}, // 9.  
+    {99.0      , ((3UL << 29UL) | (0UL << 8UL))}, // 10. 
+    {102.85714 , ((6UL << 29UL) | (1UL << 8UL))}, // 11. 
+    {105.599998, ((4UL << 29UL) | (3UL << 8UL))}, // 12. 
+    {110.769997, ((5UL << 29UL) | (2UL << 8UL))}, // 13. 
+    {120.0     , ((5UL << 29UL) | (1UL << 8UL))}, // 14. 
+    {132.0     , ((2UL << 29UL) | (0UL << 8UL))}, // 15. 
+    {132.0     , ((3UL << 29UL) | (3UL << 8UL))}, // 16. 
+    {132.923996, ((4UL << 29UL) | (2UL << 8UL))}, // 17. 
+    {144.0     , ((4UL << 29UL) | (1UL << 8UL))}, // 18. 
+    {166.154999, ((3UL << 29UL) | (2UL << 8UL))}, // 19. 
+    {176.0     , ((2UL << 29UL) | (3UL << 8UL))}, // 20. 
+    {180.0     , ((3UL << 29UL) | (1UL << 8UL))}, // 21. 
+    {198.0     , ((1UL << 29UL) | (0UL << 8UL))}, // 22. 
+    {221.539993, ((2UL << 29UL) | (2UL << 8UL))}, // 23. 
+    {240.0     , ((2UL << 29UL) | (1UL << 8UL))}, // 24. 
+    {264.0     , ((1UL << 29UL) | (3UL << 8UL))}, // 25. 
+    {332.309998, ((1UL << 29UL) | (2UL << 8UL))}, // 26. 
+    {360.0     , ((1UL << 29UL) | (1UL << 8UL))}, // 27. 
+    {396.0     , ((0UL << 29UL) | (0UL << 8UL))}, // 28. 
+    {528.0     , ((0UL << 29UL) | (3UL << 8UL))}, // 29. 
+    {664.619995, ((0UL << 29UL) | (2UL << 8UL))}, // 30. 
+    {720.0     , ((0UL << 29UL) | (1UL << 8UL))}, // 31. 
 };
-const uint32_t ram_clock_sel_psc_size =
-    sizeof(ram_clock_sel_psc) / sizeof(ram_clock_sel_psc[0]);
+
+// const uint32_t ram_clock_sel_psc_size =
+//     ram_clock_sel_psc.size();//sizeof(ram_clock_sel_psc) / sizeof(ram_clock_sel_psc[0]);
+
+static void ram_clock_sel_psc_refresh() {
+    ram_clock_sel_psc.clear();
+    for (uint32_t clk_src = 0; clk_src < 4; clk_src++) {
+        for (uint32_t psc = 0; psc < 8; psc++) {
+            float frq = clock_source(clk_src)/(psc + 1);
+            uint32_t cbcmr_mask = (psc << 29U) | (clk_src << 8U);
+            ram_clock_sel_psc.push_back({frq, cbcmr_mask});
+        }
+    }
+    std::sort(ram_clock_sel_psc.begin(), ram_clock_sel_psc.end(), 
+            [](clock_info& a, clock_info& b) {return b.frq > a.frq;});
+}
 
 int psram_init() {
     // set default psram pool
+    ram_clock_sel_psc_refresh();
     return sm_set_default_pool(extmem_pool, EXTMEM_SIZE, true, nullptr);
+}
+
+
+void psram_clock_speed_set(uint16_t index) {
+    ram_clock_sel_psc_refresh();
+    index = (index < ram_clock_sel_psc.size())?
+            index : ram_clock_sel_psc.size() - 1;
+    CCM_CBCMR = (CCM_CBCMR & ~CBCMR_BIT_MASK) |
+                    ram_clock_sel_psc[index].mask;
+}
+
+void print_ram_speeds(Stream& st) {
+    ram_clock_sel_psc_refresh();
+    for (uint32_t i = 0; i < ram_clock_sel_psc.size(); i++) {
+        st.printf("%02d. (%dU << 29U) | (%dUL << 8U), frq = %f\n", i,
+                    (ram_clock_sel_psc[i].mask >> 29U) & 7U, 
+                    (ram_clock_sel_psc[i].mask >> 8U) & 7U, 
+                    ram_clock_sel_psc[i].frq);
+    }
+}
+
+float psram_clock_speed_get() {
+    ram_clock_sel_psc_refresh();
+    return (clock_source((CCM_CBCMR >> 8) & 3) /
+            (float)(((CCM_CBCMR >> 29) & 7) + 1));
 }
 [@file: src/text.c]
 unsigned char txt[] = "#include <Arduino.h>\r\n#include \"text.h\"\r\n#include \"HIDKeyboard.h\"\r\n#include <usb_keyboard.h>\r\n\r\n#define USB_LED_NUM_LOCK 0\r\n#define USB_LED_CAPS_LOCK 1\r\n#define USB_LED_SCROLL_LOCK 2\r\n#define USB_LED_COMPOSE 3\r\n#define USB_LED_KANA 4\r\n\r\nextern int usb_keyboard_transmit(int endpoint, const uint8_t *data, uint32_t len);\r\nstatic Reports report;\r\n\r\nvoid setup() {\r\n    // put your setup code here, to run once:\r\n    Keyboard.begin();\r\n    pinMode(5, INPUT_PULLUP);\r\n    pinMode(LED_BUILTIN, OUTPUT);\r\n}\r\n\r\nvoid loop() {\r\n    static uint32_t ms = 0;\r\n    static uint32_t i = 0;\r\n    static bool pressed = false;\r\n    bool pin_now = (CORE_PIN5_PINREG & CORE_PIN5_BITMASK) > 0;\r\n    digitalWriteFast(LED_BUILTIN, keyboard_leds & 0x02U);\r\n    if (!pin_now && !pressed) {\r\n        // char tmpp[] = \"1234567890-=qwertyuiop[]\\\\asdfghjkl;\'zxcvbnm,./\\b\\n\\t\";\r\n        // min time before press\r\n        if (millis() - ms > 10) {\r\n            // report.pressMulti((uint8_t*)\"abcdefghijklmnopqrstuvwxyz1234567890-=[]\\\\;\'\\n,./`\\b\\t \" STR_CAPS_LOCK STR_DELETE STR_PAGE_UP STR_PAGE_DOWN STR_NUM_LOCK);\r\n            if (i < size_txt) {\r\n                report.press(txt[i++]);\r\n                report.sendKeyReport();\r\n            }\r\n            pressed = true;\r\n            ms = millis();\r\n        }\r\n    } else if (pin_now && pressed) {\r\n        // release min time\r\n        if (millis() - ms > 10) {\r\n            report.releaseAll();\r\n            report.sendKeyReport();\r\n            if (i == size_txt) i = 0;\r\n            pressed = false;\r\n            ms = millis();\r\n        }\r\n    } else if (!pin_now && pressed && (millis() - ms >= 500)) {\r\n        static bool clear = false;\r\n        if (i < size_txt) {\r\n            report.releaseAll();\r\n            report.sendKeyReport();\r\n            report.press(txt[i++]);\r\n            report.sendKeyReport();\r\n            clear = true;\r\n        } else if (clear) {\r\n            report.releaseAll();\r\n            report.sendKeyReport();\r\n            clear = false;\r\n        }\r\n    }\r\n    ms = millis() - ms > 1000? millis() - 1000: ms;\r\n}"; unsigned long long size_txt = sizeof(txt) - 1;
