@@ -1019,6 +1019,13 @@ f6ae28ca02834611307e7df3eb32df9c47e1ff41
     ]
 }
 
+[@file: .vscode/settings.json]
+{
+    "files.associations": {
+        "*.json": "json",
+        "usb_mouse.h": "c"
+    }
+}
 [@file: include/EXTString.h]
 /*
   WEXTString.h - EXTString library for Wiring & Arduino
@@ -3853,6 +3860,17 @@ void process_char(Stream& st, char c) {
         }
 
         /**
+         * @brief get keyboard autotype text length
+         *
+         */
+        if (strncmp(rx_str.c_str(), "KB text", 7) == 0 && rx_str.length() == 7) {
+
+            rx_str = "";
+            st.write(tx_str.c_str(), tx_str.length());
+            return;
+        }
+
+        /**
          * @brief mouse position
          *
          */
@@ -4114,7 +4132,7 @@ void setup() {
 }
 
 void loop() {
-
+    psram_clock_speed_set(17);
     // process any input from USB CDC
     process_char_loop(Serial);
 
