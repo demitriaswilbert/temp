@@ -1,6 +1,6 @@
 import os
-root_dir = "C:/Users/User/Documents/vscode/Enigma"
-# root_dir = "C:/Users/User/Documents/PlatformIO/Projects/temp"
+# root_dir = "C:/Users/User/Documents/vscode/Enigma"
+root_dir = "C:/Users/User/Documents/PlatformIO/Projects/temp"
 filenames = []
 
 for dir_, unused, files in os.walk(root_dir):
