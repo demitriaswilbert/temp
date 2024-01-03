@@ -13,16 +13,26 @@ for dir_, unused, files in os.walk(root_dir):
         # # if not rel_file.startswith("C:/Users/User/Documents/PlatformIO/Projects/Test Keyboard/.git"):
         # filenames.append(rel_file)
 
-totalstring = ""
+totalstring = b''
 
 for i in filenames:
-    totalstring += f'[@file: {i[len(root_dir)+1:]}]\n'
     with open(i, "rb") as file:
-        totalstring += file.read().decode("utf-8") + '\n'
+        tmp_str = b''
+        try:
+            tmp_str = file.read()
+            decode_test = tmp_str.decode("utf-8")
+        except Exception as e:
+            print(e)
+            print(f'Skipping file: {i}')
+            continue
+
+        totalstring += f'[@file: {i[len(root_dir)+1:]}]\n'.encode('utf-8')
+        totalstring += tmp_str
+        totalstring += '\n'.encode('utf-8')
     print(f'Processed {i}')
 
 
 with open("file1.txt", "wb") as file:
-    file.write(totalstring.encode('utf-8'))
+    file.write(totalstring)
 
 
