@@ -10,8 +10,12 @@ def read_thread_f(port: serial.Serial, stop_event: threading.Event):
     while not stop_event.is_set():
         text = port.read_all()
         if text:
-            text = text.decode('utf-8')
-            print(text)
+            try:
+                text = text.decode('utf-8', errors='replace')
+                print(text)
+            except UnicodeDecodeError as e:
+                print(e)
+
         time.sleep(0.1)
 
 
@@ -63,6 +67,10 @@ if __name__ == '__main__':
             if input_filepath.startswith("_CDC "):
                 time.sleep(0.2)
                 send_string_to_serial(b'\010' + input_filepath[5:].encode('utf-8') + b'\033')
+            elif input_filepath.startswith("_CDCR "):
+                time.sleep(0.2)
+                byte_value = eval("b'\010" + input_filepath[6:] + "\033'")
+                send_string_to_serial(byte_value)
             elif input_filepath != '': break
 
         stop_event.set()
