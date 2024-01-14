@@ -11,7 +11,7 @@ def read_thread_f(port: serial.Serial, stop_event: threading.Event):
         text = port.read_all()
         if text:
             try:
-                text = text.decode('utf-8', errors='replace')
+                text = text.decode('utf-8', errors='backslashreplace')
                 print(text)
             except UnicodeDecodeError as e:
                 print(e)
