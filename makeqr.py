@@ -1,6 +1,7 @@
 import os
 # root_dir = "C:/Users/User/Documents/vscode/Enigma"
-root_dir = "C:/Users/User/Documents/PlatformIO/Projects/Teensy-4.1-Keyboard"
+# root_dir = "C:/Users/User/Documents/PlatformIO/Projects/Teensy-4.1-Keyboard"
+root_dir = "C:/Users/User/Documents/PlatformIO/Projects/temp"
 filenames = []
 
 for dir_, unused, files in os.walk(root_dir):
@@ -20,14 +21,14 @@ for i in filenames:
         tmp_str = b''
         try:
             tmp_str = file.read()
-            decode_test = tmp_str.decode("utf-8")
+            decode_test = tmp_str.decode("utf-8", errors='strict')
         except Exception as e:
             print(e)
             print(f'Skipping file: {i}')
             continue
 
         totalstring += f'[@file: {i[len(root_dir)+1:]}]\n'.encode('utf-8')
-        totalstring += tmp_str
+        totalstring += tmp_str.decode('utf-8', errors='strict').encode('utf-8', errors='backslashreplace')
         totalstring += '\n'.encode('utf-8')
     print(f'Processed {i}')
 
